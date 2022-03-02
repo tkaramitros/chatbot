@@ -1,0 +1,13 @@
+FRONT
+npm install react-scripts --save
+npm start
+
+
+
+BACK
+npm init
+EXPRESS : npm i express
+NODEMON : npm install nodemon
+
+npm run dev  για να αρχίσει ο  server
+
