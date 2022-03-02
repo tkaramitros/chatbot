@@ -1,11 +1,11 @@
 import React from 'react'
 
-const SearcBar = () => {
+const Footer = () => {
   return (
     <div>
-      SearchBar
+      Footer
     </div>
   )
 }
 
-export default SearcBar
+export default Footer
