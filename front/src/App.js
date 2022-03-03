@@ -12,15 +12,13 @@ function App() {
       <SearcBar />
       <Footer />
 
-      <form action="post" method="post" 
-              className="form">
-          <button type="submit">Connected?</button>
-        </form>
+      <form action="post" method="post" className="form">
+        <button type="submit">Connected?</button>
+      </form>
 
-         <form action="hello" method="post" 
-              className="form">
-          <button type="submit">Hello!!</button>
-        </form>
+      <form action="hello" method="post" className="form">
+        <button type="submit">Hello!!</button>
+      </form>
     </>
   );
 }
