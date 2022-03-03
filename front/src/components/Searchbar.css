@@ -1,0 +1,11 @@
+.search {
+  border: 2px solid black;
+  font-size: 70px;
+  height: 250px;
+  margin-top: 1px;
+  text-align: center;
+}
+
+.text {
+  margin-top: 60px;
+}

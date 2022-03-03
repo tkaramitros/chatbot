@@ -1,0 +1,9 @@
+.header {
+  border: 2px solid black;
+  font-size: 70px;
+  height: 250px;
+}
+
+.text {
+  margin-top: 60px;
+}
