@@ -9,18 +9,6 @@ function App() {
     <>
       <Navbar />
       <Header />
-      <div className="check">
-        <form action="post" method="post" className="form">
-          <button class="btn btn-outline-primary" type="submit">
-            Connected?
-          </button>
-        </form>
-        <form action="hello" method="post" className="form">
-          <button class="btn btn-outline-success" type="submit">
-            Hello!!
-          </button>
-        </form>
-      </div>
       <SearchBar />
       <Footer />
     </>
