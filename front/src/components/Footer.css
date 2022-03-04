@@ -1,0 +1,12 @@
+.footer {
+  border: 2px solid black;
+  font-size: 70px;
+  height: 300px;
+  margin-top: 5px;
+  text-align: center;
+  background-color: rgb(238, 236, 236);
+}
+
+.text1 {
+  margin-top: 100px;
+}
