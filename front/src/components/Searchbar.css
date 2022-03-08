@@ -116,12 +116,7 @@
 .btn-check:checked + .btn-light,
 .btn-light.active,
 .btn-light:active,
-.show > .btn-light.dropdown-toggle,
-.btn-check:active + .btn-light:focus,
-.btn-check:checked + .btn-light:focus,
-.btn-light.active:focus,
-.btn-light:active:focus,
-.show > .btn-light.dropdown-toggle:focus {
+.show > .btn-light.dropdown-toggle {
   box-shadow: none;
   background-color: black;
   color: white;
