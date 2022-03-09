@@ -7,29 +7,49 @@ const SearchBar = () => {
   const [location,setLocation] = useState('');
   const [price,setPrice] = useState('');
   const [size,setSize] = useState('');
+  const [buyOrRent,setBuyOrRent] = useState('')
+  const [propType,setPropType] = useState('')
 
-
+ 
 
 
   
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(location,price,size)
+    console.log(location,price,size,buyOrRent,propType)
   }
 
   return (
     
       <div className='container' >
         <div className='selection row'>
-          <div className='box-btn  col-sm col-lg-2 col-md ' id='container'>
-            <button type="button" className="btn select-button btn-light active"  aria-pressed="true" data-bs-toggle="button" autoComplete="off">Buy</button>
-            <button type="button" className="btn select-button btn-light"  data-bs-toggle="button" autoComplete="off">Rent</button>
+          <div className="btn-group col-sm col-lg-2" role="group" aria-label="Basic radio toggle button group">
+            <input type="radio" className="btn-check" value='buy' onClick={(e) => setBuyOrRent(e.target.value)} name="btnradio" id="btnradio1" autoComplete="off" />
+            <label className="btn select-button btn-outline-dark" htmlFor="btnradio1">Buy</label>
+
+            <input type="radio" className="btn-check" value='rent' onClick={(e) => setBuyOrRent(e.target.value)} name="btnradio" id="btnradio2" autoComplete="off"/>
+            <label className="btn select-button btn-outline-dark" htmlFor="btnradio2">Rent</label>
           </div>
           <div className='box-btn2 col-sm col-lg-3 '>
-            <button type="button" className="btn select-button btn-light active" aria-pressed="true" data-bs-toggle="button" autoComplete="off">Κατοικία</button>
-            <button type="button" className="btn select-button btn-light" data-bs-toggle="button" autoComplete="off">Επαγγελματικό</button>
-            <button type="button" className="btn select-button btn-light" data-bs-toggle="button" autoComplete="off">Γη</button>
+            <div className="form-check">
+              <input className="form-check-input" value='home' onClick={(e) => setPropType(e.target.value)} type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
+              <label className="form-check-label" htmlFor="flexRadioDefault1">
+                Home
+              </label>
+            </div>
+            <div className="form-check professional">
+              <input className="form-check-input" value='office' onClick={(e) => setPropType(e.target.value)} type="radio" name="flexRadioDefault" id="flexRadioDefault2" />
+              <label className="form-check-label" htmlFor="flexRadioDefault2">
+                Office
+              </label>
+            </div>
+            <div className="form-check">
+              <input className="form-check-input" value='land' onClick={(e) => setPropType(e.target.value)} type="radio" name="flexRadioDefault" id="flexRadioDefault2" />
+              <label className="form-check-label" htmlFor="flexRadioDefault2">
+                Land
+              </label>
+            </div>
           </div>
         </div>
       
