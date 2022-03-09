@@ -1,3 +1,33 @@
+.search-bar {
+  background-image: linear-gradient(
+    to bottom,
+    rgb(172, 220, 252),
+    rgb(146, 209, 250),
+    rgb(172, 220, 252)
+  );
+  padding-bottom: 15px;
+  padding-top: 15px;
+}
+
+.fadeTop {
+  height: 7.4rem;
+  background-image: linear-gradient(
+    180deg,
+    transparent,
+    rgb(146, 209, 250),
+    rgb(172, 220, 252)
+  );
+}
+.fadeBottom {
+  height: 7.4rem;
+  background-image: linear-gradient(
+    180deg,
+    rgb(172, 220, 252),
+    rgb(146, 209, 250),
+    transparent
+  );
+}
+
 .form-control {
   border: none;
   outline: none;
@@ -12,6 +42,7 @@
   border: none;
   padding-right: 0;
   height: 60px;
+  background-color: white;
 }
 
 .icon {
@@ -25,13 +56,12 @@
 
 .d-flex {
   border: 1px solid black;
-  border-radius: 10px;
 
   align-items: center;
-
   width: 1000px;
   margin: auto;
   margin-bottom: 40px;
+  background-color: white;
 }
 
 .btn {
@@ -41,7 +71,6 @@
 }
 
 .search-btn {
-  border-radius: 0px 10px 10px 0;
   width: 80px;
   height: 48px;
   border: none;
@@ -72,7 +101,7 @@
   justify-content: space-between;
   margin-top: 30px;
   margin-bottom: 2px;
-  border-radius: 10px;
+  background-color: white;
 }
 .box-btn2 {
   border: 1px solid black;
@@ -83,7 +112,7 @@
   align-items: center;
   margin-top: 30px;
   margin-bottom: 2px;
-  border-radius: 10px;
+  background-color: white;
 }
 
 .form-check-input:checked {
@@ -98,7 +127,7 @@
 .select-button {
   width: 60%;
   background: none;
-  border-radius: 10px;
+  border: none;
 }
 
 .select-button:hover {
@@ -124,6 +153,10 @@
 @media screen and (min-width: 768px) and (max-width: 1024px) {
   .d-flex {
     width: 730px;
+  }
+
+  .selection {
+    margin: auto;
   }
 
   .btn-group {
