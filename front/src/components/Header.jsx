@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./Header.css";
+import Navbar from "./Navbar";
 
 const Header = ({ slides }) => {
   const [current, setCurrent] = useState(0);
@@ -29,39 +30,48 @@ const Header = ({ slides }) => {
   };
 
   return (
-    <section className="header-section">
-      <div className="header-wrapper">
-        {slides.map((slide, index) => {
-          return (
-            <div className="header-slide" key={index}>
-              {index === current && (
-                <div className="slider">
-                  <img
-                    className="header-image"
-                    src={slide.image}
-                    alt={slide.alt}
-                  />
-                  <div className="header-content">
-                    <h1>{slide.title}</h1>
-                    <p>{slide.price}</p>
-                    <button
-                      className="btn btn-outline-light"
-                      style={{ maxWidth: "160px" }}
-                    >
-                      {slide.label}
-                    </button>
+    <>
+      <Navbar />
+      <section className="header-section">
+        <div className="header-wrapper">
+          {slides.map((slide, index) => {
+            return (
+              <div className="header-slide" key={index}>
+                {index === current && (
+                  <div className="slider">
+                    <img
+                      className="header-image"
+                      src={slide.image}
+                      alt={slide.alt}
+                    />
+                    <div className="header-content">
+                      <h1>{slide.title}</h1>
+                      <p>{slide.price}</p>
+                      <button
+                        className="btn btn-outline-light"
+                        style={{ maxWidth: "160px" }}
+                      >
+                        {slide.label}
+                      </button>
+                    </div>
                   </div>
-                </div>
-              )}
-            </div>
-          );
-        })}
-        <div className="slider-buttons">
-          <i className="bi bi-arrow-left arrowButtons" onClick={prevSlide}></i>
-          <i className="bi bi-arrow-right arrowButtons" onClick={nextSlide}></i>
+                )}
+              </div>
+            );
+          })}
+          <div className="slider-buttons">
+            <i
+              className="bi bi-arrow-left arrowButtons"
+              onClick={prevSlide}
+            ></i>
+            <i
+              className="bi bi-arrow-right arrowButtons"
+              onClick={nextSlide}
+            ></i>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 
