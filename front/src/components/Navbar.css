@@ -1,0 +1,11 @@
+.navbar-brand {
+  width: 100%;
+}
+
+.navbar-brand img {
+  width: 15%;
+}
+
+.navbar-nav .nav-item {
+  margin-right: 20px;
+}
