@@ -11,3 +11,7 @@ NODEMON : npm install nodemon
 
 npm run dev  για να αρχίσει ο  server
 
+3/3/22
+npm install --save morgan body-parser mongoose multer
+
+npm install bcrypt
