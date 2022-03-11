@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Searchbar.css";
+import axios from "axios";
 
 const SearchBar = () => {
   const [location, setLocation] = useState("");
@@ -7,6 +8,20 @@ const SearchBar = () => {
   const [size, setSize] = useState("");
   const [buyOrRent, setBuyOrRent] = useState("");
   const [propType, setPropType] = useState("");
+
+  const [response, setRespone] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/post/")
+      .then((res) => {
+        setRespone(res.data);
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
