@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const postSchema = mongoose.Schema(
 	{
 		_id: mongoose.Schema.Types.ObjectId,
+
 		title: { type: String ,required:true},
 		description: { type: String ,required:true},
 		location: { type: String ,required:true},
@@ -12,6 +13,17 @@ const postSchema = mongoose.Schema(
 		buyOrRent: { type: String ,required:true},
 		//images: [{type: Buffer}] - upload imageS
 		image: {type: Buffer}
+
+		title: { type: String },
+		description: { type: String },	
+		location:{type: String},
+		price: { type: Number},
+		size: { type: Number },
+		propType: { type: String },
+		buyOrRent: { type: String},
+		image: String
+		
+
 	},
 	{
 		timestamps: true
