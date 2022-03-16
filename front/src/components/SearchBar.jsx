@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Searchbar.css";
 import axios from "axios";
+import Items from "./Items";
 
 const SearchBar = () => {
   const [location, setLocation] = useState("");
@@ -9,25 +10,65 @@ const SearchBar = () => {
   const [buyOrRent, setBuyOrRent] = useState("");
   const [propType, setPropType] = useState("");
 
-  const [response, setRespone] = useState([]);
+  const [ads, setAds] = useState([]);
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:4000/post/")
-      .then((res) => {
-        setRespone(res.data);
-        console.log(response);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  });
+  {
+    /*useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios("http://localhost:4000/post/");
+      setAds(response.data);
+    };
+    fetchData();
+  }, []);*/
+  }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(location, price, size, buyOrRent, propType);
+  const handleSubmit = async () => {
+    const response = await axios("http://localhost:4000/post/");
+    setAds(response.data);
+    Object.values(ads).filter((house) => {
+      if (
+        house.location.includes(location) &&
+        house.buyOrRent.includes(buyOrRent) &&
+        house.propType.includes(propType) &&
+        house.price.toString().includes(price) &&
+        house.size.toString().includes(size)
+      ) {
+        return house;
+      }
+
+      return house;
+    });
+    ads.map((house, key) => {
+      return (
+        <Items key={key} title={house.title} description={house.description} />
+      );
+    });
   };
 
+  useEffect(handleSubmit, []);
+
+  {
+    /*const handleSubmit = ads
+    .filter((house) => {
+      if (
+        house.location.includes(location) &&
+        house.buyOrRent.includes(buyOrRent) &&
+        house.propType.includes(propType) &&
+        house.price.toString().includes(price) &&
+        house.size.toString().includes(size)
+      ) {
+        return house;
+      }
+
+      return house;
+    })
+    .map((house, key) => {
+      return (
+        <Items key={key} title={house.title} description={house.description} />
+      );
+    });
+  */
+  }
   return (
     <>
       <div className="fadeTop" />
@@ -184,6 +225,7 @@ const SearchBar = () => {
           </div>
         </div>
       </div>
+
       <div className="fadeBottom" />
     </>
   );
