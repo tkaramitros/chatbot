@@ -34,6 +34,11 @@ router.post('/', upload.single('image'), async (req, res) => {
 	//const buf = [];
 	//req.files.forEach((element) => buf.push(element.buffer));
 	//console.log(req.file)
+	var picture
+	if (req.file){
+		 picture = req.file.buffer
+	}
+	
 	const post = new Post({
 		_id: new mongoose.Types.ObjectId(),
 		title: req.body.title,
@@ -44,7 +49,9 @@ router.post('/', upload.single('image'), async (req, res) => {
 		propType: req.body.propType,
 		buyOrRent: req.body.buyOrRent,
 		//images: buf
-		image:req.file.buffer
+		image:picture
+		
+		
 	});
 
 	try {
@@ -56,11 +63,15 @@ router.post('/', upload.single('image'), async (req, res) => {
 });
 
 
-
+//get: /localhost:4000/post
 //##########################     GET All POSTS  ##################
 router.get('/', async (req, res) => {
+	const reqQuery = {...req.query}
+	let queryStr = JSON.stringify(req.query)
+	queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g,(match)=>`$${match}`)	
 	try {
-		const posts = await Post.find();
+		//JSON.parse(queryStr)
+		const posts = await Post.find(JSON.parse(queryStr));
 		res.send({
 			count: posts.length,
 			aggelies: posts
