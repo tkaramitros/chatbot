@@ -37,9 +37,11 @@ async function generateData(x) {
 		'near the forest'
 	];
 	const location = [ 'Rafina', 'Loutsa', 'Thessaloniki', 'Xalandri', 'Panormou', 'Hlioupoli' ]; //5
-	const price = [ 100000, 120000, 200000, 30000, 10000, 125000, 110000, 450000, 80000, 75000, 65000, 70000, 45000 ]; //12
+	const priceRent = [ 250,280,300,350,370,375,320,330,340,400,450,500,600]; //0-12
+	const priceBuy = [ 40000,50000,60000,70000,80000,90000,100000,110000,120000,130000,140000,150000,160000 ]; //0-12
 	const size = [ 100, 50, 40, 60, 70, 80, 90, 110, 120, 55, 45, 65, 105, 150 ]; //13
 	const propType = [ 'Home', 'Office', 'Land' ];
+	const buyOrRent = ['Buy','Rent']
 
 	//for (let index = 0; index < x; index++) {
 	var propertyType;
@@ -55,28 +57,40 @@ async function generateData(x) {
 		}
 		return propertyType, descriptionType;
 	}
-
+	var price
+	var BorR
+	function CategoryAndPrice() {
+		BorR =buyOrRent[between(0, 1)]
+		if (BorR === 'Buy') {
+			price=priceBuy[between(0, 12)]
+		}else{
+			price=priceRent[between(0, 12)]
+		}
+		return BorR,price
+	}
+	
 	for (let index = 0; index < x; index++) {
 		description();
+		CategoryAndPrice()
 		const post = new Post({
 			_id: new mongoose.Types.ObjectId(),
 			title: title[between(0, 3)].toString() + ' ' + propertyType,
 			description: descriptionType,
 			location: location[between(0, 5)].toString(),
-			price: price[between(0, 12)].toString(),
-			size: size[between(0, 13)].toString(),
+			price: price,
+			size: size[between(0, 13)],
 			propType: propertyType,
-			buyOrRent: 'Rent'//change manually between Buy or Rent
+			buyOrRent: BorR
 		});
 		try {
 			await post.save();
 		} catch (e) {
 			console.log(e);
 		}
-        console.log(index)
+        
 	}
 }
 
-;
+
 
 module.exports = generateData;
