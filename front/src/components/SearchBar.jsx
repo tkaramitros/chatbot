@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from "react";
 import "./Searchbar.css";
 import axios from "axios";
-import Items from "./Items";
 
 const SearchBar = () => {
-  const [location, setLocation] = useState("");
+  //const navigate = useNavigate();
+  //const location = useLocation();
+  //const params = location.search ? location.search : null;
+
+  const [filter, setFilter] = useState("");
+  const [loading, setLoading] = useState("");
+
+  const [city, setCity] = useState("");
   const [price, setPrice] = useState("");
   const [size, setSize] = useState("");
   const [buyOrRent, setBuyOrRent] = useState("");
@@ -12,63 +18,65 @@ const SearchBar = () => {
 
   const [ads, setAds] = useState([]);
 
-  {
-    /*useEffect(() => {
+  useEffect(() => {
+    let cancel;
+
     const fetchData = async () => {
-      const response = await axios("http://localhost:4000/post/");
-      setAds(response.data);
-    };
-    fetchData();
-  }, []);*/
-  }
+      setLoading(true);
+      try {
+        //let query;
 
-  const handleSubmit = async () => {
-    const response = await axios("http://localhost:4000/post/");
-    setAds(response.data);
-    Object.values(ads).filter((house) => {
-      if (
-        house.location.includes(location) &&
-        house.buyOrRent.includes(buyOrRent) &&
-        house.propType.includes(propType) &&
-        house.price.toString().includes(price) &&
-        house.size.toString().includes(size)
-      ) {
-        return house;
+        //if (params && !filter) {
+        //  query = params;
+        //} else {
+        //  query = filter;
+        //}
+
+        const { data } = await axios({
+          method: "GET",
+          url: `/post${filter}`,
+          cancelToken: new axios.CancelToken((c) => (cancel = c)),
+        });
+
+        setAds(data);
+
+        setLoading(false);
+      } catch (error) {
+        if (axios.isCancel(error)) return;
+        console.log(error.response);
       }
+    };
 
-      return house;
-    });
-    ads.map((house, key) => {
-      return (
-        <Items key={key} title={house.title} description={house.description} />
-      );
-    });
+    fetchData();
+
+    return () => cancel();
+  }, [filter]);
+
+  const handleSubmit = () => {
+    const buyLowPrice = price - 10000;
+    const buyHighPrice = +price + 10000;
+
+    const rentLowPrice = price - 100;
+    const rentHighPrice = +price + 100;
+
+    const buyOrRentValue = buyOrRent ? `buyOrRent=${buyOrRent}` : "";
+    const newPrice =
+      buyOrRent == "Buy"
+        ? `price[gte]=${buyLowPrice}&price[lte]=${buyHighPrice}`
+        : `price[gte]=${rentLowPrice}&price[lte]=${rentHighPrice}`;
+    const priceValue =
+      price && buyOrRent ? newPrice : price ? `price=${price}` : "";
+
+    const sizeValue = size ? `size=${size}` : "";
+    const cityValue = city ? `city=${city}` : "";
+    const propTypeValue = propType ? `propType=${propType}` : "";
+    const urlFilter = `?${priceValue}&${sizeValue}&${cityValue}&${buyOrRentValue}&${propTypeValue}`;
+
+    setFilter(urlFilter);
+    //navigate(urlFilter);
+    console.log(ads);
   };
 
-  useEffect(handleSubmit, []);
-
-  {
-    /*const handleSubmit = ads
-    .filter((house) => {
-      if (
-        house.location.includes(location) &&
-        house.buyOrRent.includes(buyOrRent) &&
-        house.propType.includes(propType) &&
-        house.price.toString().includes(price) &&
-        house.size.toString().includes(size)
-      ) {
-        return house;
-      }
-
-      return house;
-    })
-    .map((house, key) => {
-      return (
-        <Items key={key} title={house.title} description={house.description} />
-      );
-    });
-  */
-  }
   return (
     <>
       <div className="fadeTop" />
@@ -83,7 +91,7 @@ const SearchBar = () => {
               <input
                 type="radio"
                 className="btn-check"
-                value="buy"
+                value="Buy"
                 onClick={(e) => setBuyOrRent(e.target.value)}
                 name="btnradio"
                 id="btnradio1"
@@ -99,7 +107,7 @@ const SearchBar = () => {
               <input
                 type="radio"
                 className="btn-check"
-                value="rent"
+                value="Rent"
                 onClick={(e) => setBuyOrRent(e.target.value)}
                 name="btnradio"
                 id="btnradio2"
@@ -116,7 +124,7 @@ const SearchBar = () => {
               <div className="form-check">
                 <input
                   className="form-check-input"
-                  value="home"
+                  value="Home"
                   onClick={(e) => setPropType(e.target.value)}
                   type="radio"
                   name="flexRadioDefault"
@@ -129,7 +137,7 @@ const SearchBar = () => {
               <div className="form-check professional">
                 <input
                   className="form-check-input"
-                  value="office"
+                  value="Office"
                   onClick={(e) => setPropType(e.target.value)}
                   type="radio"
                   name="flexRadioDefault"
@@ -142,7 +150,7 @@ const SearchBar = () => {
               <div className="form-check">
                 <input
                   className="form-check-input"
-                  value="land"
+                  value="Land"
                   onClick={(e) => setPropType(e.target.value)}
                   type="radio"
                   name="flexRadioDefault"
@@ -168,7 +176,7 @@ const SearchBar = () => {
                     type="text"
                     className="form-control"
                     placeholder="Location"
-                    onChange={(e) => setLocation(e.target.value)}
+                    onChange={(e) => setCity(e.target.value)}
                     aria-label="Location"
                     aria-describedby="basic-addon1"
                   />
