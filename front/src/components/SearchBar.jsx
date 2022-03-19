@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./Searchbar.css";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import Ads from "../pages/Ads";
 
 const SearchBar = () => {
   //const navigate = useNavigate();
@@ -38,7 +40,7 @@ const SearchBar = () => {
           cancelToken: new axios.CancelToken((c) => (cancel = c)),
         });
 
-        setAds(data);
+        setAds(data.aggelies);
 
         setLoading(false);
       } catch (error) {
@@ -59,6 +61,9 @@ const SearchBar = () => {
     const rentLowPrice = price - 100;
     const rentHighPrice = +price + 100;
 
+    const lowerSize = size - 15;
+    const higherSize = +size + 15;
+
     const buyOrRentValue = buyOrRent ? `buyOrRent=${buyOrRent}` : "";
     const newPrice =
       buyOrRent == "Buy"
@@ -67,7 +72,9 @@ const SearchBar = () => {
     const priceValue =
       price && buyOrRent ? newPrice : price ? `price=${price}` : "";
 
-    const sizeValue = size ? `size=${size}` : "";
+    const sizeValue = size
+      ? `size[gte]=${lowerSize}&size[lte]=${higherSize}`
+      : "";
     const cityValue = city ? `city=${city}` : "";
     const propTypeValue = propType ? `propType=${propType}` : "";
     const urlFilter = `?${priceValue}&${sizeValue}&${cityValue}&${buyOrRentValue}&${propTypeValue}`;
@@ -223,6 +230,7 @@ const SearchBar = () => {
                 </div>
               </form>
             </nav>
+
             <button
               className="btn search-btn btn-outline-warning "
               type="submit"
@@ -233,8 +241,18 @@ const SearchBar = () => {
           </div>
         </div>
       </div>
-
       <div className="fadeBottom" />
+      <div>
+        {loading || filter === "" ? (
+          <div className="spinner-border" role="status"></div>
+        ) : (
+          ads.map((ad) => (
+            <div key={ad._id}>
+              <Ads ad={ad} />
+            </div>
+          ))
+        )}
+      </div>
     </>
   );
 };
