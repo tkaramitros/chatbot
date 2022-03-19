@@ -3,6 +3,7 @@ import "./Searchbar.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Ads from "../pages/Ads";
+import Pagination from "./Pagination";
 
 const SearchBar = () => {
   //const navigate = useNavigate();
@@ -20,6 +21,9 @@ const SearchBar = () => {
 
   const [ads, setAds] = useState([]);
 
+  const [page, setPage] = useState(1);
+  const [pages, setPages] = useState(1);
+
   useEffect(() => {
     let cancel;
 
@@ -34,14 +38,14 @@ const SearchBar = () => {
         //  query = filter;
         //}
 
-        const { data } = await axios({
+        const { data, pages: totalPages } = await axios({
           method: "GET",
-          url: `/post${filter}`,
+          url: `/post?page=${page}${filter}`,
           cancelToken: new axios.CancelToken((c) => (cancel = c)),
         });
 
         setAds(data.aggelies);
-
+        setPages(data.pages);
         setLoading(false);
       } catch (error) {
         if (axios.isCancel(error)) return;
@@ -52,7 +56,7 @@ const SearchBar = () => {
     fetchData();
 
     return () => cancel();
-  }, [filter]);
+  }, [filter, page]);
 
   const handleSubmit = () => {
     const buyLowPrice = price - 10000;
@@ -66,7 +70,7 @@ const SearchBar = () => {
 
     const buyOrRentValue = buyOrRent ? `buyOrRent=${buyOrRent}` : "";
     const newPrice =
-      buyOrRent == "Buy"
+      buyOrRent === "Buy"
         ? `price[gte]=${buyLowPrice}&price[lte]=${buyHighPrice}`
         : `price[gte]=${rentLowPrice}&price[lte]=${rentHighPrice}`;
     const priceValue =
@@ -77,11 +81,10 @@ const SearchBar = () => {
       : "";
     const cityValue = city ? `city=${city}` : "";
     const propTypeValue = propType ? `propType=${propType}` : "";
-    const urlFilter = `?${priceValue}&${sizeValue}&${cityValue}&${buyOrRentValue}&${propTypeValue}`;
+    const urlFilter = `&${priceValue}&${sizeValue}&${cityValue}&${buyOrRentValue}&${propTypeValue}`;
 
     setFilter(urlFilter);
     //navigate(urlFilter);
-    console.log(ads);
   };
 
   return (
@@ -246,11 +249,17 @@ const SearchBar = () => {
         {loading || filter === "" ? (
           <div className="spinner-border" role="status"></div>
         ) : (
-          ads.map((ad) => (
-            <div key={ad._id}>
-              <Ads ad={ad} />
+          <div>
+            <Pagination page={page} pages={pages} changePage={setPage} />
+            <div>
+              {ads.map((ad) => (
+                <div key={ad._id}>
+                  <Ads ad={ad} />
+                </div>
+              ))}
             </div>
-          ))
+            <Pagination page={page} pages={pages} changePage={setPage} />
+          </div>
         )}
       </div>
     </>

@@ -7,22 +7,22 @@ const Ads = ({ ad }) => {
     <>
       <div className="fadeTop" />
       <div className="search-bar">
-        <div class="card" style={{ width: "35rem", marginBottom: "20px" }}>
-          <img src={ImageFour} class="card-img-top" alt="..." />
-          <div class="card-body">
-            <h5 class="card-title">{ad.title}</h5>
-            <p class="card-text">{ad.description}</p>
+        <div className="card" style={{ width: "35rem", marginBottom: "20px" }}>
+          <img src={ImageFour} className="card-img-top" alt="..." />
+          <div className="card-body">
+            <h5 className="card-title">{ad.title}</h5>
+            <p className="card-text">{ad.description}</p>
           </div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">Location: {ad.city}</li>
-            <li class="list-group-item">Price: {ad.price} €</li>
-            <li class="list-group-item">Size: {ad.size} m²</li>
+          <ul className="list-group list-group-flush">
+            <li className="list-group-item">Location: {ad.city}</li>
+            <li className="list-group-item">Price: {ad.price} €</li>
+            <li className="list-group-item">Size: {ad.size} m²</li>
           </ul>
-          <div class="card-body">
+          <div className="card-body">
             {ad.buyOrRent} {ad.propType}
             <button
               type="button"
-              class="btn btn-dark"
+              className="btn btn-dark"
               style={{ marginLeft: "20px" }}
             >
               View
