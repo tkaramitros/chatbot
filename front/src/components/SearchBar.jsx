@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./Searchbar.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import Ads from "../pages/Ads";
-import Pagination from "./Pagination";
+
+import Items from "../pages/Items";
 
 const SearchBar = () => {
   //const navigate = useNavigate();
@@ -86,6 +86,24 @@ const SearchBar = () => {
     setFilter(urlFilter);
     //navigate(urlFilter);
   };
+
+  let filtering;
+
+  if (filter === "") {
+    filtering = "";
+  } else {
+    filtering = (
+      <div>
+        <Items
+          page={page}
+          pages={pages}
+          setPage={setPage}
+          ads={ads}
+          loading={loading}
+        />
+      </div>
+    );
+  }
 
   return (
     <>
@@ -245,23 +263,7 @@ const SearchBar = () => {
         </div>
       </div>
       <div className="fadeBottom" />
-      <div>
-        {loading || filter === "" ? (
-          <div className="spinner-border" role="status"></div>
-        ) : (
-          <div>
-            <Pagination page={page} pages={pages} changePage={setPage} />
-            <div>
-              {ads.map((ad) => (
-                <div key={ad._id}>
-                  <Ads ad={ad} />
-                </div>
-              ))}
-            </div>
-            <Pagination page={page} pages={pages} changePage={setPage} />
-          </div>
-        )}
-      </div>
+      <div>{filtering}</div>
     </>
   );
 };
