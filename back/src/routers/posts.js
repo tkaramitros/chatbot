@@ -2,8 +2,6 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-const paginate = require("express-paginate");
-
 const fs = require("fs");
 const Post = require("../models/Post");
 
@@ -73,8 +71,7 @@ router.get("/", async (req, res) => {
   let queryStr = JSON.stringify(reqQuery);
   queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g, (match) => `$${match}`);
   try {
-    //find all the posts with that criteria
-    console.log(JSON.parse(queryStr));
+    //find all the posts with that criteria   
     const test = await Post.find(JSON.parse(queryStr));
     //pagination
     //.sort({price:-1})
