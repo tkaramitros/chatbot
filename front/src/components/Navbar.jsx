@@ -4,7 +4,7 @@ import "./Navbar.css";
 
 const Navbar = () => {
   return (
-  <nav className="navbar navbar-expand-lg  ">
+  <nav className="navbar2 navbar navbar-expand-lg  ">
     <div className="container-fluid">
     <a class="navbar-brand" href="#">
     <img src={logo} alt="Real Estate" />
