@@ -1,0 +1,13 @@
+.form-select {
+  width: 25%;
+  margin: auto;
+}
+
+.row {
+  justify-content: space-between;
+}
+
+.btn-filter {
+  width: 8%;
+  margin: 5px;
+}

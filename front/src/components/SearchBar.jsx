@@ -11,6 +11,8 @@ const SearchBar = () => {
   //const params = location.search ? location.search : null;
 
   const [filter, setFilter] = useState("");
+  const [sorting, setSorting] = useState("createdAt");
+
   const [loading, setLoading] = useState("");
 
   const [city, setCity] = useState("");
@@ -23,6 +25,8 @@ const SearchBar = () => {
 
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(1);
+
+  const [priceOrder, setPriceOrder] = useState("descending");
 
   useEffect(() => {
     let cancel;
@@ -40,7 +44,7 @@ const SearchBar = () => {
 
         const { data, pages: totalPages } = await axios({
           method: "GET",
-          url: `/post?page=${page}${filter}`,
+          url: `/post?page=${page}&sort=${sorting}${filter}`,
           cancelToken: new axios.CancelToken((c) => (cancel = c)),
         });
 
@@ -56,7 +60,7 @@ const SearchBar = () => {
     fetchData();
 
     return () => cancel();
-  }, [filter, page]);
+  }, [filter, page, sorting]);
 
   const handleSubmit = () => {
     const buyLowPrice = price - 10000;
@@ -98,6 +102,7 @@ const SearchBar = () => {
           page={page}
           pages={pages}
           setPage={setPage}
+          setSorting={setSorting}
           ads={ads}
           loading={loading}
         />
