@@ -3,7 +3,7 @@
   z-index:100;
   justify-content: space-between;
   backdrop-filter: blur(10px);
-  
+  width: 100%
 }
 
 .navbar-brand {
