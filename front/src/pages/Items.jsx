@@ -40,9 +40,13 @@ const Items = ({
           aria-label=".form-select-sm example"
           onChange={(e) => setSort(e.target.value)}
         >
+<<<<<<< HEAD
           <option disabled selected>
             Sort by
           </option>
+=======
+          <option disabled>Sort by</option>
+>>>>>>> c7f7e90fbd58e1b98ca76e6a06163871a0c5ac22
           <option value="price">Price</option>
           <option value="size">Size</option>
         </select>
@@ -51,9 +55,12 @@ const Items = ({
           aria-label=".form-select-sm example"
           onChange={(e) => setSortDirection(e.target.value)}
         >
+<<<<<<< HEAD
           <option disabled selected>
             Direction
           </option>
+=======
+>>>>>>> c7f7e90fbd58e1b98ca76e6a06163871a0c5ac22
           <option value="">Ascending</option>
           <option value="-">Descending</option>
         </select>
