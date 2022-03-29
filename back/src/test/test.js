@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Post = require('../models/Post');
+const multer = require('multer');
 
 async function generateData(x) {
 	function between(min, max) {
@@ -37,13 +38,31 @@ async function generateData(x) {
 		'near the forest'
 	];
 	const location = [ 'Rafina', 'Loutsa', 'Thessaloniki', 'Xalandri', 'Panormou', 'Hlioupoli' ]; //5
-	const priceRent = [ 250,280,300,350,370,375,320,330,340,400,450,500,600]; //0-12
-	const priceBuy = [ 40000,50000,60000,70000,80000,90000,100000,110000,120000,130000,140000,150000,160000 ]; //0-12
+	const priceRent = [ 250, 280, 300, 350, 370, 375, 320, 330, 340, 400, 450, 500, 600 ]; //0-12
+	const priceBuy = [
+		40000,
+		50000,
+		60000,
+		70000,
+		80000,
+		90000,
+		100000,
+		110000,
+		120000,
+		130000,
+		140000,
+		150000,
+		160000
+	]; //0-12
 	const size = [ 100, 50, 40, 60, 70, 80, 90, 110, 120, 55, 45, 65, 105, 150 ]; //13
 	const propType = [ 'Home', 'Office', 'Land' ];
-	const buyOrRent = ['Buy','Rent']
+	const buyOrRent = [ 'Buy', 'Rent' ];
 
-	//for (let index = 0; index < x; index++) {
+	const images = [
+		'https://image.shutterstock.com/image-vector/home-icon-260nw-160210421.jpg',
+		'https://image.shutterstock.com/image-vector/vector-illustration-cool-detailed-red-260nw-94498447.jpg'
+	];
+	
 	var propertyType;
 	var descriptionType;
 	function description() {
@@ -57,37 +76,40 @@ async function generateData(x) {
 		}
 		return propertyType, descriptionType;
 	}
-	var price
-	var BorR
+	var price;
+	var BorR;
 	function CategoryAndPrice() {
-		BorR =buyOrRent[between(0, 1)]
+		BorR = buyOrRent[between(0, 1)];
 		if (BorR === 'Buy') {
-			price=priceBuy[between(0, 12)]
-		}else{
-			price=priceRent[between(0, 12)]
+			price = priceBuy[between(0, 12)];
+		} else {
+			price = priceRent[between(0, 12)];
 		}
-		return BorR,price
+		return BorR, price;
 	}
+	
 	
 	for (let index = 0; index < x; index++) {
 		description();
-		CategoryAndPrice()
+		CategoryAndPrice();
 		const post = new Post({
 			_id: new mongoose.Types.ObjectId(),
 			title: title[between(0, 3)].toString() + ' ' + propertyType,
 			description: descriptionType,
-			location: location[between(0, 5)].toString(),
+			city: location[between(0, 5)].toString(),
 			price: price,
 			size: size[between(0, 13)],
 			propType: propertyType,
-			buyOrRent: BorR
+			buyOrRent: BorR,
+			image: images[between(0, 1)]
 		});
 		try {
 			await post.save();
 		} catch (e) {
 			console.log(e);
 		}
-        
+	
+		
 	}
 }
 

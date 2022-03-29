@@ -2,14 +2,13 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const paginate = require('express-paginate');
-
 const fs = require('fs');
 const Post = require('../models/Post');
-
 router.use(bodyParser.urlencoded({ extended: true }));
 const multer = require('multer');
 const generateData = require('../test/test');
+
+
 
 //##########################     CREATE A POST - WITH IMAGE ##################
 const upload = multer({
@@ -25,8 +24,6 @@ const upload = multer({
 	}
 });
 
-//router.post('/', upload.array('images'), async (req, res) => {
-	// upload images
 router.post('/', upload.single('image'), async (req, res) => {
 	// const buf = [];
 	// req.files.forEach((element) => buf.push(element.buffer));
@@ -35,7 +32,7 @@ router.post('/', upload.single('image'), async (req, res) => {
 	if (req.file) {
 		picture = req.file.buffer;
 	}
-	
+
 	const post = new Post({
 		_id: new mongoose.Types.ObjectId(),
 		title: req.body.title,
@@ -62,24 +59,22 @@ router.get('/', async (req, res) => {
 	//SORT
 	let x;
 	if (req.query.sort) {
-		let sortby = req.query.sort;		
-		x=sortby	
-	}else{
-		x='createdAt'
+		let sortby = req.query.sort;
+		x = sortby;
+	} else {
+		x = 'createdAt';
 	}
 	const reqQuery = { ...req.query };
 	const removeFields = [ 'sort' ];
 	removeFields.forEach((val) => delete reqQuery[val]);
-	let queryStr = JSON.stringify(reqQuery);	
+	let queryStr = JSON.stringify(reqQuery);
 	queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g, (match) => `$${match}`);
 	try {
 		//find all the posts with that criteria
-		console.log(JSON.parse(queryStr));
 		const test = await Post.find(JSON.parse(queryStr));
 		//pagination
 		//.sort({price:-1})
-		let posts = Post.find(JSON.parse(queryStr)).sort(x)
-		
+		let posts = Post.find(JSON.parse(queryStr)).sort(x);
 		const page = parseInt(req.query.page) || 1;
 		const pageSize = parseInt(req.query.limit) || 25;
 		const skip = (page - 1) * pageSize;
@@ -107,15 +102,13 @@ router.get('/:id', async (req, res) => {
 	try {
 		const post = await Post.findOne({ _id: req.params.id });
 
-//send picture
- res.set('Content-Type', 'image/jpg');
-	res.send(post.image);
-	
+		//send picture
+		res.set('Content-Type', 'image/jpg');
+		res.send(post.image);
 	} catch (error) {
 		res.status(500).send({ message: 'User not found' });
 	}
 });
-
 
 //##########################     DELETE A POST  ##################
 router.delete('/:id', async (req, res) => {

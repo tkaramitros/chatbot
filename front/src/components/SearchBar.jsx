@@ -1,17 +1,114 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Searchbar.css";
+import axios from "axios";
+import { Link } from "react-router-dom";
+
+import Items from "../pages/Items";
 
 const SearchBar = () => {
-  const [location, setLocation] = useState("");
+  //const navigate = useNavigate();
+  //const location = useLocation();
+  //const params = location.search ? location.search : null;
+
+  const [filter, setFilter] = useState("");
+  const [sorting, setSorting] = useState("createdAt");
+
+  const [loading, setLoading] = useState("");
+
+  const [city, setCity] = useState("");
   const [price, setPrice] = useState("");
   const [size, setSize] = useState("");
   const [buyOrRent, setBuyOrRent] = useState("");
   const [propType, setPropType] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(location, price, size, buyOrRent, propType);
+  const [ads, setAds] = useState([]);
+
+  const [page, setPage] = useState(1);
+  const [pages, setPages] = useState(1);
+
+  const [priceOrder, setPriceOrder] = useState("descending");
+
+  useEffect(() => {
+    let cancel;
+
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        //let query;
+
+        //if (params && !filter) {
+        //  query = params;
+        //} else {
+        //  query = filter;
+        //}
+
+        const { data, pages: totalPages } = await axios({
+          method: "GET",
+          url: `/post?page=${page}&sort=${sorting}${filter}`,
+          cancelToken: new axios.CancelToken((c) => (cancel = c)),
+        });
+
+        setAds(data.aggelies);
+        setPages(data.pages);
+        setLoading(false);
+      } catch (error) {
+        if (axios.isCancel(error)) return;
+        console.log(error.response);
+      }
+    };
+
+    fetchData();
+
+    return () => cancel();
+  }, [filter, page, sorting]);
+
+  const handleSubmit = () => {
+    const buyLowPrice = price - 10000;
+    const buyHighPrice = +price + 10000;
+
+    const rentLowPrice = price - 100;
+    const rentHighPrice = +price + 100;
+
+    const lowerSize = size - 15;
+    const higherSize = +size + 15;
+
+    const buyOrRentValue = buyOrRent ? `buyOrRent=${buyOrRent}` : "";
+    const newPrice =
+      buyOrRent === "Buy"
+        ? `price[gte]=${buyLowPrice}&price[lte]=${buyHighPrice}`
+        : `price[gte]=${rentLowPrice}&price[lte]=${rentHighPrice}`;
+    const priceValue =
+      price && buyOrRent ? newPrice : price ? `price=${price}` : "";
+
+    const sizeValue = size
+      ? `size[gte]=${lowerSize}&size[lte]=${higherSize}`
+      : "";
+    const cityValue = city ? `city=${city}` : "";
+    const propTypeValue = propType ? `propType=${propType}` : "";
+    const urlFilter = `&${priceValue}&${sizeValue}&${cityValue}&${buyOrRentValue}&${propTypeValue}`;
+
+    setFilter(urlFilter);
+    //navigate(urlFilter);
   };
+
+  let filtering;
+
+  if (filter === "") {
+    filtering = "";
+  } else {
+    filtering = (
+      <div>
+        <Items
+          page={page}
+          pages={pages}
+          setPage={setPage}
+          setSorting={setSorting}
+          ads={ads}
+          loading={loading}
+        />
+      </div>
+    );
+  }
 
   return (
     <>
@@ -27,7 +124,7 @@ const SearchBar = () => {
               <input
                 type="radio"
                 className="btn-check"
-                value="buy"
+                value="Buy"
                 onClick={(e) => setBuyOrRent(e.target.value)}
                 name="btnradio"
                 id="btnradio1"
@@ -43,7 +140,7 @@ const SearchBar = () => {
               <input
                 type="radio"
                 className="btn-check"
-                value="rent"
+                value="Rent"
                 onClick={(e) => setBuyOrRent(e.target.value)}
                 name="btnradio"
                 id="btnradio2"
@@ -60,7 +157,7 @@ const SearchBar = () => {
               <div className="form-check">
                 <input
                   className="form-check-input"
-                  value="home"
+                  value="Home"
                   onClick={(e) => setPropType(e.target.value)}
                   type="radio"
                   name="flexRadioDefault"
@@ -73,7 +170,7 @@ const SearchBar = () => {
               <div className="form-check professional">
                 <input
                   className="form-check-input"
-                  value="office"
+                  value="Office"
                   onClick={(e) => setPropType(e.target.value)}
                   type="radio"
                   name="flexRadioDefault"
@@ -86,7 +183,7 @@ const SearchBar = () => {
               <div className="form-check">
                 <input
                   className="form-check-input"
-                  value="land"
+                  value="Land"
                   onClick={(e) => setPropType(e.target.value)}
                   type="radio"
                   name="flexRadioDefault"
@@ -112,7 +209,7 @@ const SearchBar = () => {
                     type="text"
                     className="form-control"
                     placeholder="Location"
-                    onChange={(e) => setLocation(e.target.value)}
+                    onChange={(e) => setCity(e.target.value)}
                     aria-label="Location"
                     aria-describedby="basic-addon1"
                   />
@@ -159,6 +256,7 @@ const SearchBar = () => {
                 </div>
               </form>
             </nav>
+
             <button
               className="btn search-btn btn-outline-warning "
               type="submit"
@@ -170,6 +268,7 @@ const SearchBar = () => {
         </div>
       </div>
       <div className="fadeBottom" />
+      <div>{filtering}</div>
     </>
   );
 };

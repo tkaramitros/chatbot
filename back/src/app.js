@@ -36,10 +36,12 @@ app.use(cors());
 //routers
 const userRouter = require('./routers/user');
 const postRouter = require('./routers/posts');
+const dialogRouter = require('./routers/dialogflow');
 
 //routers
 app.use('/user', userRouter);
 app.use('/post', postRouter);
+app.use('/api/dialogflow', dialogRouter);
 app.get('*', (req, res) => {  res.status(200).json({message:"Maybe you want to check your URL!!"});  })
 
 module.exports = app;

@@ -1,3 +1,10 @@
 node_modules
 config
 dist
+GOOGLE_KEY
+chatbot\back\GOOGLE_KEY\test-chat-bot-app-345017-f32d2043d869.json
+
+
+dev.js
+./server/config/dev.js
+chatbot\back\src\config\dev.js
