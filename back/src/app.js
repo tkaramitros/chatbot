@@ -37,6 +37,7 @@ app.use(cors());
 const userRouter = require('./routers/user');
 const postRouter = require('./routers/posts');
 
+
 //routers
 app.use('/user', userRouter);
 app.use('/post', postRouter);
