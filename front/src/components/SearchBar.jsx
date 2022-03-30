@@ -2,20 +2,17 @@ import React, { useEffect, useState } from "react";
 import "./Searchbar.css";
 import axios from "axios";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import { Link } from "react-router-dom";
 
 import Items from "../pages/Items";
 
 const SearchBar = () => {
-
   const navigate = useNavigate();
 
-  navigate = useNavigate();
-  //const location = useLocation();
-  //const params = location.search ? location.search : null;
-
+  const location = useLocation();
+  const params = location.search ? location.search : null;
 
   const [filter, setFilter] = useState("");
   const [sorting, setSorting] = useState("createdAt");
@@ -40,12 +37,17 @@ const SearchBar = () => {
 
     const fetchData = async () => {
       setLoading(true);
+      let query;
       try {
-       
+        if (params && !filter) {
+          query = params;
+        } else {
+          query = filter;
+        }
 
         const { data, pages: totalPages } = await axios({
           method: "GET",
-          url: `/post?page=${page}&sort=${sorting}${filter}`,
+          url: `/post?page=${page}&sort=${sorting}${query}`,
           cancelToken: new axios.CancelToken((c) => (cancel = c)),
         });
 
@@ -61,7 +63,7 @@ const SearchBar = () => {
     fetchData();
 
     return () => cancel();
-  }, [filter, page, sorting]);
+  }, [params, filter, page, sorting]);
 
   const handleSubmit = () => {
     const buyLowPrice = price - 10000;
