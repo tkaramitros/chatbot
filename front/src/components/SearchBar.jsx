@@ -30,8 +30,6 @@ const SearchBar = () => {
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(1);
 
-  const [priceOrder, setPriceOrder] = useState("descending");
-
   useEffect(() => {
     let cancel;
 
@@ -259,7 +257,6 @@ const SearchBar = () => {
                 </div>
               </form>
             </nav>
-
             <button
               className="btn search-btn btn-outline-warning "
               type="submit"
