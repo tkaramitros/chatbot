@@ -1,118 +1,136 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const structjson = require('./structjson.js');
-const dialogflow = require('dialogflow');
-const uuid = require('uuid');
-const config = require('../config/keys');
+const structjson = require("./structjson.js");
+const dialogflow = require("dialogflow");
+const uuid = require("uuid");
+const config = require("../config/keys");
+const mongoose = require("mongoose");
+const URL = require("../models/url");
 
-
-const projectId = config.googleProjectID
-const sessionId = config.dialogFlowSessionID
-const languageCode = config.dialogFlowSessionLanguageCode
-const filename = config.keyFilename
-
+const projectId = config.googleProjectID;
+const sessionId = config.dialogFlowSessionID;
+const languageCode = config.dialogFlowSessionLanguageCode;
+const filename = config.keyFilename;
 
 // Create a new session
 const sessionClient = new dialogflow.SessionsClient({
-    keyFilename : filename
-  
+  keyFilename: filename,
 });
 const sessionPath = sessionClient.sessionPath(projectId, sessionId);
 
-// We will make two routes 
-
+// We will make two routes
 
 // Text Query Route
-let city
-let propType
-let buyOrRent
-let price
-let size
+let city;
+let propType;
+let buyOrRent;
+let price;
+let size;
 
+router.post("/textQuery", async (req, res) => {
+  //We need to send some information that comes from the client to Dialogflow API
+  // The text query request.
+  const request = {
+    session: sessionPath,
+    queryInput: {
+      text: {
+        // The query to send to the dialogflow agent
 
-router.post('/textQuery', async (req, res) => {
-  
-    //We need to send some information that comes from the client to Dialogflow API 
-    // The text query request.
-    const request = {
-        session: sessionPath,
-        queryInput: {
-            text: {
-                // The query to send to the dialogflow agent
-              
-                text: req.body.text,
-                // The language used by the client (en-US)
-                languageCode: languageCode,
-            },
-        },
-    };
+        text: req.body.text,
+        // The language used by the client (en-US)
+        languageCode: languageCode,
+      },
+    },
+  };
 
-    // Send request and log result
-    const responses = await sessionClient.detectIntent(request);
-    console.log('Detected intent');
-    const result = responses[0].queryResult;
-    console.log(`  Query: ${result.queryText}`);
-    console.log(`  Response: ${result.fulfillmentText}`);
+  // Send request and log result
+  const responses = await sessionClient.detectIntent(request);
+  console.log("Detected intent");
+  const result = responses[0].queryResult;
+  console.log(`  Query: ${result.queryText}`);
+  console.log(`  Response: ${result.fulfillmentText}`);
+  if (
+    result.intent.displayName ===
+    "what to do - RentBuy - HouseLandOffice - Money - city - next - next"
+  ) {
+    if (result.queryText === "Yes" || "yes") {
+      let response = {
+        buyOrRent,
+        city,
+        propType,
+        price,
+        size,
+      };
 
-    
-    if(result.intent.displayName === 'what to do - RentBuy - HouseLandOffice - Money - city - next'){
-        // "displayName": "what to do - RentBuy - HouseLandOffice - Money - next"
-        buyOrRent=result.outputContexts[1].parameters.fields.BoR.stringValue
-        city=result.outputContexts[1].parameters.fields.city.stringValue
-        propType=result.outputContexts[1].parameters.fields.HOL.stringValue
-        price = result.outputContexts[1].parameters.fields.number.numberValue
-        size=  result.outputContexts[1].parameters.fields.size.numberValue
-
-        console.log("buyOrRent : "+buyOrRent )
-        console.log("city : "+city )
-        console.log("propType : "+propType )
-        console.log("price : "+price )  
-        console.log("size : "+size )  
-        const  request={
-            type:'GET',
-           //POSTMAN  url:'htttp://localhost:3000/products/'+doc.id
-           url:`/post/?page=1&sort=createdAt&price[gte]=${price-10000}&price[lte]=${price+10000}&size[gte]=${size-10}&size[lte]=${size+10}&city=${city}&buyOrRent=${buyOrRent}&propType=${propType}`
-        }
-        res.send(request)
-    }else{
-        res.send(result)
+      res.send(result);
     }
-    
-})
+  } else {
+    res.send(result);
+  }
 
-
+  if (
+    result.intent.displayName ===
+    "what to do - RentBuy - HouseLandOffice - Money - city - next"
+  ) {
+    buyOrRent = result.outputContexts[3].parameters.fields.BoR.stringValue;
+    city = result.outputContexts[3].parameters.fields.city.stringValue;
+    propType = result.outputContexts[3].parameters.fields.HOL.stringValue;
+    price = result.outputContexts[3].parameters.fields.number.numberValue;
+    size = result.outputContexts[3].parameters.fields.size.numberValue;
+    const url = new URL({
+      _id: new mongoose.Types.ObjectId(),
+      buyOrRent,
+      city,
+      propType,
+      price,
+      size,
+    });
+    try {
+      await url.save();
+      console.log("Success");
+      console.log(url);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+});
 
 //Event Query Route
 
-router.post('/eventQuery', async (req, res) => {
-    //We need to send some information that comes from the client to Dialogflow API 
-    // The text query request.
-    const request = {
-        session: sessionPath,
-        queryInput: {
-            event: {
-                // The query to send to the dialogflow agent
-                name: req.body.event,
-                // The language used by the client (en-US)
-                languageCode: languageCode,
-            },
-        },
-    };
+router.post("/eventQuery", async (req, res) => {
+  //We need to send some information that comes from the client to Dialogflow API
+  // The text query request.
+  //yes yes yes
+  const request = {
+    session: sessionPath,
+    queryInput: {
+      event: {
+        // The query to send to the dialogflow agent
+        name: req.body.event,
+        // The language used by the client (en-US)
+        languageCode: languageCode,
+      },
+    },
+  };
 
-    // Send request and log result
-    const responses = await sessionClient.detectIntent(request);
-    console.log('Detected intent');
-    const result = responses[0].queryResult;
-    console.log(`  Query: ${result.queryText}`);
-    console.log(`  Response: ${result.fulfillmentText}`);
+  // Send request and log result
+  const responses = await sessionClient.detectIntent(request);
+  console.log("Detected intent");
+  const result = responses[0].queryResult;
+  console.log(`  Query: ${result.queryText}`);
+  console.log(`  Response: ${result.fulfillmentText}`);
 
-    res.send(result)
-})
+  res.send(result);
+});
 
-
-
-
-
-
+router.get("/getURL", async (req, res) => {
+  try {
+    const url = await URL.find();
+    await URL.deleteMany({});
+    res.send({ URL: url });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 
 module.exports = router;

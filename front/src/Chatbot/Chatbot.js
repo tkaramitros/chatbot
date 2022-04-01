@@ -88,6 +88,7 @@ function Chatbot() {
           },
         },
       };
+
       dispatch(saveMessage(conversation));
     }
   };
@@ -105,12 +106,39 @@ function Chatbot() {
     }
   };
 
+  const getResults = async () => {
+    const results = await axios.get("/dialogflow/getURL");
+    console.log(results);
+  };
+
   const renderOneMessage = (message, i) => {
     console.log("message", message);
-
-    return (
-      <Message key={i} who={message.who} text={message.content.text.text} />
-    );
+    if (message.content && message.content.text && message.content.text.text) {
+      return (
+        <Message key={i} who={message.who} text={message.content.text.text} />
+      );
+    } else if (message.content && message.content.payload.fields.richContent) {
+      return (
+        <>
+          <div style={{ padding: "1rem" }}>
+            <i className="bi bi-robot"></i>
+          </div>
+          <a
+            //href={
+            //  message.content.payload.fields.richContent.listValue.values[0]
+            //    .listValue.values[0].structValue.fields.link.stringValue
+            //}
+            onClick={getResults}
+            class="btn btn-primary btn-lg "
+            tabIndex="-1"
+            role="button"
+            style={{ marginLeft: "10px" }}
+          >
+            Press
+          </a>
+        </>
+      );
+    }
   };
 
   const renderMessage = (returnMessages) => {
