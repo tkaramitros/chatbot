@@ -29,7 +29,6 @@ let buyOrRent
 let price
 let size
 
-
 router.post('/textQuery', async (req, res) => {
   
     //We need to send some information that comes from the client to Dialogflow API 
@@ -53,31 +52,28 @@ router.post('/textQuery', async (req, res) => {
     const result = responses[0].queryResult;
     console.log(`  Query: ${result.queryText}`);
     console.log(`  Response: ${result.fulfillmentText}`);
-
-    
-    if(result.intent.displayName === 'what to do - RentBuy - HouseLandOffice - Money - city - next'){
-        // "displayName": "what to do - RentBuy - HouseLandOffice - Money - next"
-        buyOrRent=result.outputContexts[1].parameters.fields.BoR.stringValue
-        city=result.outputContexts[1].parameters.fields.city.stringValue
-        propType=result.outputContexts[1].parameters.fields.HOL.stringValue
-        price = result.outputContexts[1].parameters.fields.number.numberValue
-        size=  result.outputContexts[1].parameters.fields.size.numberValue
-
-        console.log("buyOrRent : "+buyOrRent )
-        console.log("city : "+city )
-        console.log("propType : "+propType )
-        console.log("price : "+price )  
-        console.log("size : "+size )  
-        const  request={
-            type:'GET',
-           //POSTMAN  url:'htttp://localhost:3000/products/'+doc.id
-           url:`/post/?page=1&sort=createdAt&price[gte]=${price-10000}&price[lte]=${price+10000}&size[gte]=${size-10}&size[lte]=${size+10}&city=${city}&buyOrRent=${buyOrRent}&propType=${propType}`
+    if(result.intent.displayName ==='what to do - RentBuy - HouseLandOffice - Money - city - next - next'){
+        if(result.queryText==='Yes'||'yes'){
+            console.log("buyOrRent : "+buyOrRent )
+            console.log("city : "+city )
+            console.log("propType : "+propType )
+            console.log("price : "+price )  
+            console.log("size : "+size )            
+            //res.redirect("/post/");        
+           res.send(result) 
         }
-        res.send(request)
     }else{
         res.send(result)
     }
+   
     
+    if(result.intent.displayName === 'what to do - RentBuy - HouseLandOffice - Money - city - next'){      
+        buyOrRent=result.outputContexts[3].parameters.fields.BoR.stringValue
+        city=result.outputContexts[3].parameters.fields.city.stringValue
+        propType=result.outputContexts[3].parameters.fields.HOL.stringValue
+        price = result.outputContexts[3].parameters.fields.number.numberValue
+        size=  result.outputContexts[3].parameters.fields.size.numberValue  
+    }
 })
 
 
