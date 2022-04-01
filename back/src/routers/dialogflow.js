@@ -83,6 +83,7 @@ router.post('/textQuery', async (req, res) => {
 router.post('/eventQuery', async (req, res) => {
     //We need to send some information that comes from the client to Dialogflow API 
     // The text query request.
+    //yes yes yes
     const request = {
         session: sessionPath,
         queryInput: {
