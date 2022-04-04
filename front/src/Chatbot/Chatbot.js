@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { saveMessage } from "../_actions/message_actions";
 import Message from "./Sections/Message";
 
-function Chatbot() {
+function Chatbot({ setUserQuery, getResults }) {
   const dispatch = useDispatch();
   const messagesFromRedux = useSelector((state) => state.message.messages);
 
@@ -106,13 +106,8 @@ function Chatbot() {
     }
   };
 
-  const getResults = async () => {
-    const results = await axios.get("/dialogflow/getURL");
-    console.log(results);
-  };
-
   const renderOneMessage = (message, i) => {
-    console.log("message", message);
+    //console.log("message", message);
     if (message.content && message.content.text && message.content.text.text) {
       return (
         <Message key={i} who={message.who} text={message.content.text.text} />
@@ -128,7 +123,10 @@ function Chatbot() {
             //  message.content.payload.fields.richContent.listValue.values[0]
             //    .listValue.values[0].structValue.fields.link.stringValue
             //}
-            onClick={getResults}
+            onClick={() => {
+              getResults();
+              setUserQuery(true);
+            }}
             class="btn btn-primary btn-lg "
             tabIndex="-1"
             role="button"
@@ -159,7 +157,7 @@ function Chatbot() {
         border: "3px solid black",
         borderRadius: "7px",
         position: "fixed",
-        zIndex: "1000",
+        zIndex: "2000",
         top: "500px",
         right: "30px",
         background: "white",

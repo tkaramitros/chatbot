@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import "./Searchbar.css";
 import axios from "axios";
-
 import { useNavigate, useLocation } from "react-router-dom";
-
 import { Link } from "react-router-dom";
-
 import Items from "../pages/Items";
+import Chatbot from "../Chatbot/Chatbot";
 
 const SearchBar = () => {
   const navigate = useNavigate();
@@ -30,6 +28,10 @@ const SearchBar = () => {
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(1);
 
+  const [chatQuery, setChatQuery] = useState({});
+  const [userQuery, setUserQuery] = useState(false);
+  const [checkHelper, setCheckHelper] = useState(false);
+
   useEffect(() => {
     let cancel;
 
@@ -50,6 +52,7 @@ const SearchBar = () => {
         });
 
         setAds(data.aggelies);
+
         setPages(data.pages);
         setLoading(false);
       } catch (error) {
@@ -111,8 +114,42 @@ const SearchBar = () => {
     );
   }
 
+  const getResults = async () => {
+    const results = await axios.get("/dialogflow/getURL");
+    const chatQuery = results.data.URL[0];
+    setBuyOrRent(chatQuery.buyOrRent);
+    setCity(chatQuery.city);
+    setPrice(chatQuery.price);
+    setSize(chatQuery.size);
+    setPropType(chatQuery.propType);
+    setCheckHelper(true);
+  };
+
+  useEffect(() => {
+    if (userQuery === true) {
+      console.log(price, city);
+      handleSubmit();
+    }
+    setUserQuery(false);
+    setCheckHelper(false);
+  }, [checkHelper]);
+
+  // useEffect(() => {
+  //   handleSubmit();
+  // }, [chatQuery]);
+
+  // useEffect(() => {
+  //   if (chatQuery && userQuery === true) {
+
+  //   }
+  //   if (buyOrRent !== undefined && propType !== undefined) {
+  //     handleSubmit();
+  //   }
+  // }, []);
+
   return (
     <>
+      <Chatbot setUserQuery={setUserQuery} getResults={getResults} />
       <div className="fadeTop" />
       <div className="search-bar">
         <div className="container">
