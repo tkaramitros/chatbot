@@ -8,6 +8,7 @@ const Post = require("../models/Post");
 router.use(bodyParser.urlencoded({ extended: true }));
 const multer = require("multer");
 const generateData = require("../test/test");
+const checkAuth = require('../middleware/check-auth');
 
 //##########################     CREATE A POST - WITH IMAGE ##################
 const upload = multer({
@@ -25,7 +26,8 @@ const upload = multer({
 
 //router.post('/', upload.array('images'), async (req, res) => {
 // upload images
-router.post("/", upload.single("image"), async (req, res) => {
+router.post("/", checkAuth, upload.single("image"), async (req, res) => {
+
   // const buf = [];
   // req.files.forEach((element) => buf.push(element.buffer));
   // console.log(req.file)
@@ -44,7 +46,7 @@ router.post("/", upload.single("image"), async (req, res) => {
     propType: req.body.propType,
     buyOrRent: req.body.buyOrRent,
     //images: buf
-    image: picture,
+    image: picture
   });
 
   try {
@@ -113,7 +115,7 @@ router.get("/:id", async (req, res) => {
 });
 
 //##########################     DELETE A POST  ##################
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", checkAuth, async (req, res) => {
   try {
     const post = await Post.findOneAndDelete({ _id: req.params.id });
     if (!post) {
