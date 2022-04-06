@@ -19,9 +19,6 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cors());
 
-
-
-
 // app.use((req, res, next) => {
 // 	res.header('Access-Control-Allow-Origin', '*');
 // 	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
@@ -36,15 +33,11 @@ app.use(cors());
 //routers
 const userRouter = require('./routers/user');
 const postRouter = require('./routers/posts');
-const homeRouter = require('./routers/home');
-const officeRouter = require('./routers/office');
-const landRouter = require('./routers/land');
+
+
 //routers
 app.use('/user', userRouter);
 app.use('/post', postRouter);
-app.use('/home', homeRouter);
-app.use('/office', officeRouter);
-app.use('/land', landRouter);
 app.get('*', (req, res) => {  res.status(200).json({message:"Maybe you want to check your URL!!"});  })
 
 module.exports = app;
