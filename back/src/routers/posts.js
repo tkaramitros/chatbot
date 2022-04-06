@@ -8,7 +8,6 @@ const Post = require("../models/Post");
 router.use(bodyParser.urlencoded({ extended: true }));
 const multer = require("multer");
 const generateData = require("../test/test");
-const checkAuth = require('../middleware/check-auth');
 
 //##########################     CREATE A POST - WITH IMAGE ##################
 const upload = multer({
@@ -26,8 +25,7 @@ const upload = multer({
 
 //router.post('/', upload.array('images'), async (req, res) => {
 // upload images
-router.post("/", checkAuth, upload.single("image"), async (req, res) => {
-
+router.post("/", upload.single("image"), async (req, res) => {
   // const buf = [];
   // req.files.forEach((element) => buf.push(element.buffer));
   // console.log(req.file)
@@ -35,7 +33,7 @@ router.post("/", checkAuth, upload.single("image"), async (req, res) => {
   if (req.file) {
     picture = req.file.buffer;
   }
-
+  console.log(req.body)
   const post = new Post({
     _id: new mongoose.Types.ObjectId(),
     title: req.body.title,
@@ -46,7 +44,19 @@ router.post("/", checkAuth, upload.single("image"), async (req, res) => {
     propType: req.body.propType,
     buyOrRent: req.body.buyOrRent,
     //images: buf
-    image: picture
+    image: picture,
+    additional: {
+			wifi: req.body.wifi,
+			pets: req.body.pets,
+			heating: req.body.heating,
+			parkingspace: req.body.parkingspace,
+			keller: req.body.keller,
+			kichen: req.body.kichen,
+			bathrooms: req.body.bathrooms,
+			// until here only for home or office
+			slope: req.body.slope,
+			orientation:req.orientation
+		}
   });
 
   try {
@@ -115,7 +125,7 @@ router.get("/:id", async (req, res) => {
 });
 
 //##########################     DELETE A POST  ##################
-router.delete("/:id", checkAuth, async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     const post = await Post.findOneAndDelete({ _id: req.params.id });
     if (!post) {
