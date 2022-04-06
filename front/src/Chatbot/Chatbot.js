@@ -130,7 +130,7 @@ function Chatbot({ setUserQuery, getResults }) {
             class="btn btn-primary btn-lg "
             tabIndex="-1"
             role="button"
-            style={{ marginLeft: "10px" }}
+            style={{ marginLeft: "10px", marginBottom: "10px" }}
           >
             Press
           </a>
@@ -150,36 +150,59 @@ function Chatbot({ setUserQuery, getResults }) {
   };
 
   return (
-    <div
-      style={{
-        height: 400,
-        width: 400,
-        border: "3px solid black",
-        borderRadius: "7px",
-        position: "fixed",
-        zIndex: "2000",
-        top: "500px",
-        right: "30px",
-        background: "white",
-      }}
-    >
-      <div style={{ height: 344, width: "100%", overflow: "auto" }}>
-        {renderMessage(messagesFromRedux)}
+    <>
+      <div class="page-content page-container" id="page-content">
+        <div class="padding">
+          <div class="row container d-flex justify-content-center">
+            <div class="col-md-6">
+              <div
+                class="card card-bordered"
+                style={{
+                  height: 400,
+                  width: 400,
+
+                  position: "fixed",
+                  zIndex: "2000",
+                  top: "500px",
+                  right: "30px",
+                  background: "white",
+                }}
+              >
+                <div class="card-header">
+                  <h4 class="card-title">
+                    <strong>ChatBot</strong>
+                  </h4>{" "}
+                </div>
+                <div style={{ height: 344, width: "100%", overflow: "auto" }}>
+                  {renderMessage(messagesFromRedux)}
+                </div>
+                <div class="publisher bt-1 border-light">
+                  {" "}
+                  <i class="avatar avatar-xs bi bi-person" />{" "}
+                  <input
+                    class="publisher-input"
+                    placeholder="Send a message..."
+                    onKeyPress={keyPressHandler}
+                    type="text"
+                  />{" "}
+                  <span class="publisher-btn file-group">
+                    {" "}
+                    <i class="fa fa-paperclip file-browser"></i>{" "}
+                    <input type="file" />{" "}
+                  </span>{" "}
+                  <a class="publisher-btn" href="#" data-abc="true">
+                    <i class="fa fa-smile"></i>
+                  </a>{" "}
+                  <a class="publisher-btn text-info" href="#" data-abc="true">
+                    <i class="fa fa-paper-plane"></i>
+                  </a>{" "}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <input
-        style={{
-          margin: 0,
-          width: "100%",
-          height: 50,
-          borderRadius: "4px",
-          padding: "5px",
-          fontSize: "1rem",
-        }}
-        placeholder="Send a message..."
-        onKeyPress={keyPressHandler}
-        type="text"
-      />
-    </div>
+    </>
   );
 }
 
