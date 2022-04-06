@@ -5,7 +5,6 @@ import "./Ads.css";
 const Ads = ({ ad }) => {
   return (
     <>
-      <div className="fadeTop" />
       <div className="search-bar2">
         <div className="card" style={{ width: "35rem", marginBottom: "20px" }}>
           <img src={ImageFour} className="card-img-top" alt="..." />
@@ -30,7 +29,6 @@ const Ads = ({ ad }) => {
           </div>
         </div>
       </div>
-      <div className="fadeBottom" />
     </>
   );
 };

@@ -1,8 +1,7 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import "./Searchbar.css";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Link } from "react-router-dom";
 import Items from "../pages/Items";
 import Chatbot from "../Chatbot/Chatbot";
 
@@ -28,9 +27,10 @@ const SearchBar = () => {
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(1);
 
-  const [chatQuery, setChatQuery] = useState({});
   const [userQuery, setUserQuery] = useState(false);
   const [checkHelper, setCheckHelper] = useState(false);
+
+  const [open, setOpen] = useState(true);
 
   useEffect(() => {
     let cancel;
@@ -100,7 +100,7 @@ const SearchBar = () => {
   if (filter === "") {
     filtering = "";
   } else {
-    filtering = (
+    filtering = ads[0] ? (
       <div>
         <Items
           page={page}
@@ -110,6 +110,10 @@ const SearchBar = () => {
           ads={ads}
           loading={loading}
         />
+      </div>
+    ) : (
+      <div className="ad-results">
+        Unfortunately no results match your criteria.
       </div>
     );
   }
@@ -134,23 +138,31 @@ const SearchBar = () => {
     setCheckHelper(false);
   }, [checkHelper]);
 
-  // useEffect(() => {
-  //   handleSubmit();
-  // }, [chatQuery]);
+  const toggleChat = open ? (
+    <Chatbot setUserQuery={setUserQuery} getResults={getResults} />
+  ) : (
+    ""
+  );
 
-  // useEffect(() => {
-  //   if (chatQuery && userQuery === true) {
-
-  //   }
-  //   if (buyOrRent !== undefined && propType !== undefined) {
-  //     handleSubmit();
-  //   }
-  // }, []);
+  const buttonIcon = open ? (
+    <i class="bi bi-x-lg" style={{ color: "white" }}></i>
+  ) : (
+    <i class="bi bi-messenger" style={{ color: "white" }}></i>
+  );
 
   return (
     <>
-      <Chatbot setUserQuery={setUserQuery} getResults={getResults} />
-      <div className="fadeTop" />
+      <div style={{ position: "absolute" }}>
+        {toggleChat}
+        <button
+          type="button"
+          class="close-chatbot"
+          onClick={() => setOpen(!open)}
+        >
+          {buttonIcon}
+        </button>
+      </div>
+
       <div className="search-bar">
         <div className="container">
           <div className="selection row">
@@ -304,7 +316,7 @@ const SearchBar = () => {
           </div>
         </div>
       </div>
-      <div className="fadeBottom" />
+
       <div>{filtering}</div>
     </>
   );

@@ -1,9 +1,17 @@
 import React, { useEffect, useRef } from "react";
 import "../Chatbot.css";
+//import soundEffect from "../../assets/soundEffect.mp3";
 
 const Message = (props) => {
   const avatar = props.who == "bot" ? "bi bi-robot avatar" : "";
   const sender = props.who == "bot" ? "" : "media-chat-reverse";
+
+  // function playSound(url) {
+  //   const audio = new Audio(url);
+  //   if (props.who == "bot") {
+  //     audio.play();
+  //   }
+  // }
 
   const divRef = useRef(null);
 
@@ -11,14 +19,6 @@ const Message = (props) => {
     divRef.current.scrollIntoView({ behavior: "smooth" });
   });
 
-  //const current = new Date();
-  //const date = `${current.getHours()}:${current.getMinutes() + 1}`;
-  var time = new Date();
-  const date = time.toLocaleString("en-US", {
-    hour: "numeric",
-    minute: "numeric",
-    hour12: true,
-  });
   return (
     <>
       <div
@@ -34,6 +34,7 @@ const Message = (props) => {
           key={props.key}
           //style={{ padding: "1rem" }}
           ref={divRef}
+          //onLoad={playSound(soundEffect)}
         >
           <i className={avatar}></i>
 

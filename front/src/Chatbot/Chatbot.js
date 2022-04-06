@@ -127,7 +127,7 @@ function Chatbot({ setUserQuery, getResults }) {
               getResults();
               setUserQuery(true);
             }}
-            class="btn btn-primary btn-lg "
+            class="btn btn-secondary btn-lg "
             tabIndex="-1"
             role="button"
             style={{ marginLeft: "10px", marginBottom: "10px" }}
@@ -152,7 +152,7 @@ function Chatbot({ setUserQuery, getResults }) {
   return (
     <>
       <div class="page-content page-container" id="page-content">
-        <div class="padding">
+        <div class="">
           <div class="row container d-flex justify-content-center">
             <div class="col-md-6">
               <div
@@ -163,7 +163,7 @@ function Chatbot({ setUserQuery, getResults }) {
 
                   position: "fixed",
                   zIndex: "2000",
-                  top: "500px",
+                  top: "400px",
                   right: "30px",
                   background: "white",
                 }}
