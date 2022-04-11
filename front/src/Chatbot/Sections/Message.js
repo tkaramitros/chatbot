@@ -22,6 +22,7 @@ const Message = (props) => {
   return (
     <>
       <div
+        key={props.i}
         class="ps-container ps-theme-default ps-active-y"
         id="chat-content"
         style={{

@@ -139,9 +139,11 @@ const SearchBar = () => {
   }, [checkHelper]);
 
   const toggleChat = open ? (
-    <Chatbot setUserQuery={setUserQuery} getResults={getResults} />
+    <div>
+      <Chatbot setUserQuery={setUserQuery} getResults={getResults} />
+    </div>
   ) : (
-    ""
+    <div></div>
   );
 
   const buttonIcon = open ? (

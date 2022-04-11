@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import "./Chatbot.css";
+//import "./Chatbot.css";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { saveMessage } from "../_actions/message_actions";
@@ -153,7 +153,7 @@ function Chatbot({ setUserQuery, getResults }) {
     <>
       <div class="page-content page-container" id="page-content">
         <div class="">
-          <div class="row container d-flex justify-content-center">
+          <div class="row container justify-content-center">
             <div class="col-md-6">
               <div
                 class="card card-bordered"
