@@ -10,7 +10,6 @@ const postSchema = mongoose.Schema(
 		size: { type: Number ,required:true},
 		propType: { type: String ,required:true},
 		buyOrRent: { type: String ,required:true},
-		//images: [{type: Buffer}] - upload imageS
 		image: {type: Buffer}
 	},
 	{
