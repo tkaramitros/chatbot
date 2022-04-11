@@ -1,0 +1,89 @@
+@import '~mdb-ui-kit/css/mdb.min.css';
+.modalBackground {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(200, 200, 200);
+    position: flex;
+    display: inline;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modalContainer {
+    width: 400px;
+    height: 400px;
+    border-radius: 12px;
+    background-color: rgb(186, 186, 186);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: flex;
+    flex-direction: column;
+    padding: 25px;
+  }
+  
+  .modalContainer .title {
+    display: inline-block;
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .titleCloseBtn {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .titleCloseBtn .button {
+    background-color: transparent;
+    border: none;
+    font-size: 25px;
+    cursor: pointer;
+  }
+  
+  .modalContainer .body {
+    flex: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.7rem;
+    text-align: center;
+  }
+  
+  .modalContainer .footermodal {
+    flex: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modalContainer .footermodal button {
+    width: 150px;
+    height: 45px;
+    margin: 10px;
+    border: none;
+    background-color: rgba(7, 7, 7, 0);
+    color: rgb(0, 0, 0);
+    border-radius: 8px;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  /* #cancelBtn  {
+    background-color: rgba(0, 0, 0, 0.31);
+    
+  } */
+  .loginbtn {
+    background-color: rgba(0, 0, 0, 0.31);
+
+  }
+  #signupbutton{
+    background-color: rgba(0, 0, 0, 0.31);
+  }
+  .col{
+    position:center;
+    padding-block: 10%;
+  }
+  .form-check-label{
+    padding-inline-end: 30%;
+    
+  }
+
+ 
