@@ -3,14 +3,12 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const fs = require("fs");
-const Post = require("../models/Post");
+const Office = require("../models/Office");
+
 router.use(bodyParser.urlencoded({ extended: true }));
 const multer = require("multer");
 const generateData = require("../test/test");
 const checkAuth = require('../middleware/check-auth');
-const sharp = require('sharp');
-
-
 
 //##########################     CREATE A POST - WITH IMAGE ##################
 const upload = multer({
@@ -26,34 +24,18 @@ const upload = multer({
   },
 });
 
-<<<<<<< HEAD
-router.post("/", upload.single("image"), async (req, res) => {
+//router.post('/', upload.array('images'), async (req, res) => {
+// upload images
+router.post("/", checkAuth, upload.single("image"),  async (req, res) => {
   // const buf = [];
   // req.files.forEach((element) => buf.push(element.buffer));
   // console.log(req.file)
   var picture;
-=======
-router.post("/",  upload.single("image"), async (req, res) => {
-  //checkAuth,
-  let picture;
->>>>>>> 9b05507324e3876246fff55b027afcecd9319c8a
   if (req.file) {
     picture = req.file.buffer;
-    
-		 
-		await sharp(picture)
-			.resize({ width: 250, height: 250 })
-			.toBuffer()
-			.then((data) => {
-				picture = data;
-				//console.log(resizedPhoto);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
   }
-
-  const post = new Post({
+  console.log(req.body)
+  const office = new Office({
     _id: new mongoose.Types.ObjectId(),
     title: req.body.title,
     description: req.body.description,
@@ -63,18 +45,38 @@ router.post("/",  upload.single("image"), async (req, res) => {
     propType: req.body.propType,
     buyOrRent: req.body.buyOrRent,
     //images: buf
-    image: picture.toString('base64')
+    image: picture,
+    additional: {
+			wifi: req.body.wifi,
+			pets: req.body.pets,
+			heating: req.body.heating,
+            typeofheating:req.body.typeofheating,
+            energyefficiency: req.body.energyefficiency,
+            yearofbuilt: req.body.yearofbuilt,
+            renovationyear:req.body.renovationyear,
+            levels:req.body.levels,
+            parkingspace: req.body.parkingspace,
+            keller: req.body.keller,
+            kichen: req.body.kichen,
+            bathrooms: req.body.bathrooms,
+            rooms: req.body.rooms,
+            typeofflooring:req.body.typeofflooring,
+            furniture: req.body.furniture,
+            alarmsystem: req.body.alarmsystem,
+            garden: req.body.garden,
+            typeofview: req.body.typeofview,
+            forpeoplewithmobilityproblems: req.body.forpeoplewithmobilityproblems,
+            floorlevel:req.body.floorlevel,
+		}
   });
 
   try {
-    await post.save();
-    res.status(201).send(post);
+    await office.save();
+    res.status(201).send(office);
   } catch (e) {
     res.status(400).send(e);
   }
 });
-
-
 
 //##########################     GET All POSTS  ##################
 router.get("/", async (req, res) => {
@@ -92,18 +94,19 @@ router.get("/", async (req, res) => {
   let queryStr = JSON.stringify(reqQuery);
   queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g, (match) => `$${match}`);
   try {
-    //find all the posts with that criteria
-    const test = await Post.find(JSON.parse(queryStr));
+    //find all the posts with that criteria   
+    const test = await Office.find(JSON.parse(queryStr));
     //pagination
     //.sort({price:-1})
-    let posts = Post.find(JSON.parse(queryStr)).sort(x);
+    let offices = Office.find(JSON.parse(queryStr)).sort(x);
+
     const page = parseInt(req.query.page) || 1;
     const pageSize = parseInt(req.query.limit) || 25;
     const skip = (page - 1) * pageSize;
     const total = test.length; //trick with test so error query already.... wont hit
     const pages = Math.ceil(total / pageSize);
-    posts = posts.skip(skip).limit(pageSize);
-    const aggelies = await posts;
+    offices = offices.skip(skip).limit(pageSize);
+    const aggelies = await offices;
 
     res.send({
       countPerPage: aggelies.length,
@@ -118,13 +121,13 @@ router.get("/", async (req, res) => {
   }
 });
 
-
 //##########################     GET A POST  ##################
 
 router.get("/:id", async (req, res) => {
   try {
-    const post = await Post.findOne({ _id: req.params.id });
-		var buf = Buffer.from(post.image, "base64")
+    const office= await Office.findOne({ _id: req.params.id });
+
+    var buf = Buffer.from(office.image, "base64")
 		//send picture
 		res.set('Content-Type', 'image/png');
 		res.send(buf);
@@ -134,16 +137,15 @@ router.get("/:id", async (req, res) => {
 });
 
 //##########################     DELETE A POST  ##################
-router.delete("/:id",  async (req, res) => {
-  //checkAuth,
+router.delete("/:id", checkAuth, async (req, res) => {
   try {
-    const post = await Post.findOneAndDelete({ _id: req.params.id });
-    if (!post) {
+    const office = await Office.findOneAndDelete({ _id: req.params.id });
+    if (!office) {
       return res.status(404).send({ message: "User not found" });
     }
     res.send({
       message: "Deleted Successfully",
-      DeletedPost: post,
+      DeletedPost: office,
     });
   } catch (e) {
     res.status(500).send();
