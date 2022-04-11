@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./Searchbar.css";
 import axios from "axios";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import Items from "../pages/Items";
 import Chatbot from "../Chatbot/Chatbot";
 
 const SearchBar = () => {
   const navigate = useNavigate();
-
+  const { urlFilter } = useParams();
   const location = useLocation();
   const params = location.search ? location.search : null;
 
@@ -92,7 +92,7 @@ const SearchBar = () => {
     const urlFilter = `&${priceValue}&${sizeValue}&${cityValue}&${buyOrRentValue}&${propTypeValue}`;
 
     setFilter(urlFilter);
-    navigate(urlFilter);
+    navigate("/items/" + urlFilter);
   };
 
   let filtering;

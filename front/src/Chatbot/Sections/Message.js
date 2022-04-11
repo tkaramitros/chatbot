@@ -31,7 +31,7 @@ const Message = (props) => {
       >
         <div
           className={`media media-chat ${sender}`}
-          key={props.key}
+          key={props.i}
           //style={{ padding: "1rem" }}
           ref={divRef}
           //onLoad={playSound(soundEffect)}
@@ -48,7 +48,7 @@ const Message = (props) => {
       <div class="ps-scrollbar-x-rail" style={{ left: "0px", bottom: "0px" }}>
         <div
           class="ps-scrollbar-x"
-          tabindex="0"
+          tabIndex="0"
           style={{ left: "0px", width: "0px" }}
         ></div>
       </div>
@@ -58,7 +58,7 @@ const Message = (props) => {
       >
         <div
           class="ps-scrollbar-y"
-          tabindex="0"
+          tabIndex="0"
           style={{ top: "0px", height: "2px" }}
         ></div>
       </div>

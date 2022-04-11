@@ -31,7 +31,6 @@ const Header = ({ slides }) => {
 
   return (
     <>
-      <Navbar />
       <section className="header-section">
         <div className="header-wrapper">
           {slides.map((slide, index) => {

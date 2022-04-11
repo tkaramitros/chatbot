@@ -110,7 +110,7 @@ function Chatbot({ setUserQuery, getResults }) {
     //console.log("message", message);
     if (message.content && message.content.text && message.content.text.text) {
       return (
-        <Message key={i} who={message.who} text={message.content.text.text} />
+        <Message i={i} who={message.who} text={message.content.text.text} />
       );
     } else if (message.content && message.content.payload.fields.richContent) {
       return (
