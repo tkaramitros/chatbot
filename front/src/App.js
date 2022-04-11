@@ -1,17 +1,29 @@
-import "./App.css";
+import React from "react";
 import Footer from "./components/Footer";
-import Header from "./components/Header";
-import SearchBar from "./components/SearchBar";
-import { SliderData } from "./SliderData";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import Sell from "./components/navpages/Sell";
+import Home from "./components/navpages/Home";
+import Rent from "./components/navpages/Rent";
+import Login from "./components/navpages/Login";
+import SignUp from "./components/navpages/SignUp";
+import "./App.css";
+
 
 function App() {
   return (
-    <>
-      <Header slides={SliderData} />
-      <SearchBar />
+    
+    <Router>
+      <Routes>
+       <Route exact path="/"  element={<Home/>} />
+       <Route path="/sell" element={<Sell/>} />
+       <Route path="/rent" element={<Rent/>} />
+       <Route path="/login" element ={<Login/>} />
+       <Route path="/signup" element ={<SignUp/>} />
+      </Routes>
+      
       <Footer />
-    </>
+    </Router>
+    
   );
 }
 

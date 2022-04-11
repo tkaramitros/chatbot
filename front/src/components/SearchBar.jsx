@@ -1,53 +1,34 @@
 import React, { useEffect, useState } from "react";
 import "./Searchbar.css";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-
 import Items from "../pages/Items";
 
 const SearchBar = () => {
-  //const navigate = useNavigate();
-  //const location = useLocation();
-  //const params = location.search ? location.search : null;
-
+  const navigate = useNavigate();
   const [filter, setFilter] = useState("");
   const [sorting, setSorting] = useState("createdAt");
-
   const [loading, setLoading] = useState("");
-
   const [city, setCity] = useState("");
   const [price, setPrice] = useState("");
   const [size, setSize] = useState("");
   const [buyOrRent, setBuyOrRent] = useState("");
   const [propType, setPropType] = useState("");
-
   const [ads, setAds] = useState([]);
-
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(1);
-
   const [priceOrder, setPriceOrder] = useState("descending");
-
   useEffect(() => {
     let cancel;
-
     const fetchData = async () => {
       setLoading(true);
       try {
-        //let query;
-
-        //if (params && !filter) {
-        //  query = params;
-        //} else {
-        //  query = filter;
-        //}
-
         const { data, pages: totalPages } = await axios({
           method: "GET",
           url: `/post?page=${page}&sort=${sorting}${filter}`,
           cancelToken: new axios.CancelToken((c) => (cancel = c)),
         });
-
         setAds(data.aggelies);
         setPages(data.pages);
         setLoading(false);
@@ -56,22 +37,16 @@ const SearchBar = () => {
         console.log(error.response);
       }
     };
-
     fetchData();
-
     return () => cancel();
   }, [filter, page, sorting]);
-
   const handleSubmit = () => {
     const buyLowPrice = price - 10000;
     const buyHighPrice = +price + 10000;
-
     const rentLowPrice = price - 100;
     const rentHighPrice = +price + 100;
-
     const lowerSize = size - 15;
     const higherSize = +size + 15;
-
     const buyOrRentValue = buyOrRent ? `buyOrRent=${buyOrRent}` : "";
     const newPrice =
       buyOrRent === "Buy"
@@ -79,20 +54,16 @@ const SearchBar = () => {
         : `price[gte]=${rentLowPrice}&price[lte]=${rentHighPrice}`;
     const priceValue =
       price && buyOrRent ? newPrice : price ? `price=${price}` : "";
-
     const sizeValue = size
       ? `size[gte]=${lowerSize}&size[lte]=${higherSize}`
       : "";
     const cityValue = city ? `city=${city}` : "";
     const propTypeValue = propType ? `propType=${propType}` : "";
     const urlFilter = `&${priceValue}&${sizeValue}&${cityValue}&${buyOrRentValue}&${propTypeValue}`;
-
     setFilter(urlFilter);
-    //navigate(urlFilter);
+    navigate(urlFilter);
   };
-
   let filtering;
-
   if (filter === "") {
     filtering = "";
   } else {
@@ -109,7 +80,6 @@ const SearchBar = () => {
       </div>
     );
   }
-
   return (
     <>
       <div className="fadeTop" />
@@ -136,7 +106,6 @@ const SearchBar = () => {
               >
                 Buy
               </label>
-
               <input
                 type="radio"
                 className="btn-check"
@@ -195,7 +164,6 @@ const SearchBar = () => {
               </div>
             </div>
           </div>
-
           <div className="d-flex row no-gutters ">
             <nav className="navbar navbar-light  col-lg-5 col-sm col-md">
               <form className="form-inline">
@@ -256,7 +224,6 @@ const SearchBar = () => {
                 </div>
               </form>
             </nav>
-
             <button
               className="btn search-btn btn-outline-warning "
               type="submit"
@@ -272,5 +239,14 @@ const SearchBar = () => {
     </>
   );
 };
-
 export default SearchBar;
+
+
+
+
+
+
+
+
+
+

@@ -1,5 +1,6 @@
 .navbar2 {
   position:fixed;
+  display: flex;
   z-index:100;
   justify-content: space-between;
   backdrop-filter: blur(10px);
@@ -20,13 +21,20 @@
 .collapse{
   justify-content: center;
 }
+.nav-item{
+  align-items: center;
+}
  .navbar-nav .nav-item  .nav-link{
   color:rgb(255, 255, 255);
   margin-right: 50px;
   text-align: center;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  
+  
   
 }
 .nav-item .nav-item {
+  
   text-align: right;
   margin-right:auto ;
 }
