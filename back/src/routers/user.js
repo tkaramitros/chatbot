@@ -49,7 +49,7 @@ router.post('/signup', async (req, res) => {
 	
 });
 
-console.log(req.body)
+
 
 router.post('/login',async (req, res) => {
 	User.find({ email: req.body.email})

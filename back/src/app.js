@@ -19,18 +19,18 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cors());
 
-
-
-
 //routers
 const userRouter = require('./routers/user');
 const postRouter = require('./routers/posts');
-const dialogRouter = require('./routers/dialogflow');
-
+const homeRouter = require('./routers/home');
+const officeRouter = require('./routers/office');
+const landRouter = require('./routers/land');
 //routers
 app.use('/user', userRouter);
 app.use('/post', postRouter);
-app.use('/dialogflow', dialogRouter);
+app.use('/home', homeRouter);
+app.use('/office', officeRouter);
+app.use('/land', landRouter);
 app.get('*', (req, res) => {  res.status(200).json({message:"Maybe you want to check your URL!!"});  })
 
 module.exports = app;

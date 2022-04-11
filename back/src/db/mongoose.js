@@ -11,6 +11,6 @@ const generateData = require("../test/testhome");
 
 mongoose.connect(  mongoURI,  { useNewUrlParser: true, useUnifiedTopology: true },  () => {
     console.log("Connected to Database");
-   generateData(1) //-->> to generate fake data
+  // generateData(1) //-->> to generate fake data
   }
 );
