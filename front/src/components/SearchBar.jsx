@@ -38,6 +38,7 @@ const SearchBar = () => {
     const fetchData = async () => {
       setLoading(true);
       let query;
+
       try {
         if (params && !filter) {
           query = params;
@@ -47,7 +48,7 @@ const SearchBar = () => {
 
         const { data, pages: totalPages } = await axios({
           method: "GET",
-          url: `/post?page=${page}&sort=${sorting}${query}`,
+          url: `/${propType.toLowerCase()}?page=${page}&sort=${sorting}${query}`,
           cancelToken: new axios.CancelToken((c) => (cancel = c)),
         });
 
