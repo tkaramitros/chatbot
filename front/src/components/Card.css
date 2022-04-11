@@ -12,6 +12,7 @@
     margin-left: 20%;
     margin-right: 20%;
     margin-top: 3%;  
+    background-color: rgba(91, 92, 92, 0.836);
 } 
 .container_card{
 
@@ -23,6 +24,7 @@
     height: 100%;
 }
 .card-body{
+    
     text-align: center;
     position: center;   
 }

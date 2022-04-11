@@ -3,14 +3,14 @@
     background-size:cover;
     background-repeat: no-repeat;
   }
-  .navbar2 {
+.navbar2 {
       position:fixed;
       display: flex;
       z-index:100;
       justify-content: space-between;
       backdrop-filter: blur(10px);      
     }
-     .container {
+.container {
       padding-top: 10%;
       display:block;     
   }  

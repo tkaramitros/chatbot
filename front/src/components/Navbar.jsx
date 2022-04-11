@@ -1,8 +1,7 @@
 import React from "react";
 import logo from "../logo.png";
 import "./Navbar.css";
-import Sell from "./navpages/Sell";
-import Rent from "./navpages/Rent";
+
 
 const Navbar = () => {
   return (

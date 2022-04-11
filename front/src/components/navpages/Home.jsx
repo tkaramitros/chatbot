@@ -10,6 +10,7 @@ import { SliderData } from "../../SliderData";
 const Home = () => {
   return (
     <>
+    
     <Header slides={SliderData} />
     <SearchBar/>
     
