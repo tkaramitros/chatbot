@@ -10,7 +10,7 @@
   margin-left: 20%;
   margin-right: 20%;
   margin-top: 3%;
-  background-color: rgba(91, 92, 92, 0.836);
+  /* background-color: rgba(91, 92, 92, 0.836); */
 }
 .container_card {
   padding-left: 10%;
@@ -24,22 +24,22 @@
   text-align: center;
   position: center;
 }
-.card-title {
+/* .card-title {
   color: rgb(255, 255, 255);
   font-family: Arial, Helvetica, sans-serif;
   padding-left: 0%;
   text-decoration: underline;
-}
-.btn {
+} */
+/* .btn {
   border: 0ch;
   font-weight: 100;
   background-color: rgb(158, 157, 151);
   color: black;
-}
-.card {
+} */
+/* .card {
   font-family: Arial, Helvetica, sans-serif;
   background-color: rgba(42, 40, 40, 0.615);
-}
+} */
 .card-text-nm {
   color: rgb(255, 255, 255);
 }

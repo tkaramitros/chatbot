@@ -31,10 +31,16 @@ const SearchBar = () => {
   const [checkHelper, setCheckHelper] = useState(false);
 
   const [open, setOpen] = useState(true);
-
+  let route;
   useEffect(() => {
     let cancel;
-
+    if (propType == "Home") {
+      route = "home";
+    } else if (propType == "Office") {
+      route = "office";
+    } else if (propType == "Land") {
+      route = "land";
+    } else route = "post";
     const fetchData = async () => {
       setLoading(true);
       let query;
@@ -48,7 +54,7 @@ const SearchBar = () => {
 
         const { data, pages: totalPages } = await axios({
           method: "GET",
-          url: `/${propType.toLowerCase()}?page=${page}&sort=${sorting}${query}`,
+          url: `/${route}?page=${page}&sort=${sorting}${query}`,
           cancelToken: new axios.CancelToken((c) => (cancel = c)),
         });
 

@@ -10,7 +10,7 @@ const Rent = () => {
         <div className="main-container">
           <Navbar />
 
-          <div className="container">
+          <div className="container container__card">
             <Card />
           </div>
         </div>

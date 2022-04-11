@@ -10,7 +10,7 @@
   background-size: cover;
   background-repeat: no-repeat;
 }
-.container {
+.container__card {
   padding-top: 10%;
   display: block;
 }

@@ -10,7 +10,7 @@
   justify-content: space-between;
   backdrop-filter: blur(10px);
 }
-.container {
+.container__card {
   padding-top: 10%;
   display: block;
 }
