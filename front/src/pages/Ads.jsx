@@ -1,5 +1,4 @@
 import React from "react";
-import ImageFour from "../assets/ImageFour.jpg";
 import "./Ads.css";
 
 const Ads = ({ ad }) => {
@@ -7,7 +6,11 @@ const Ads = ({ ad }) => {
     <>
       <div className="search-bar2">
         <div className="card" style={{ width: "35rem", marginBottom: "20px" }}>
-          <img src={ImageFour} className="card-img-top" alt="..." />
+          <img
+            src={`data:image/png;base64,${ad.image}`}
+            className="card-img-top"
+            alt="..."
+          />
           <div className="card-body">
             <h5 className="card-title">{ad.title}</h5>
             <p className="card-text">{ad.description}</p>
