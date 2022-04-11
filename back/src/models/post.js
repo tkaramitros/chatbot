@@ -11,7 +11,7 @@ const postSchema = mongoose.Schema(
 		propType: { type: String ,required:true},
 		buyOrRent: { type: String ,required:true},
 		//images: [{type: Buffer}] - upload imageS
-		image: {type: Buffer}
+		image: {type: String}
 	},
 	{
 		timestamps: true

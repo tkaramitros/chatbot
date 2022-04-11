@@ -19,25 +19,18 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cors());
 
-// app.use((req, res, next) => {
-// 	res.header('Access-Control-Allow-Origin', '*');
-// 	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-// 	if (req.method === 'OPTIONS') {
-// 		res.header('Access-Control-Allow-Methods', 'PUT,POST,PATCH,DELETE,GET');
-// 		return res.status(200).json({});
-// 	}
-// 	next();
-// });
+
 
 
 //routers
 const userRouter = require('./routers/user');
 const postRouter = require('./routers/posts');
-
+const dialogRouter = require('./routers/dialogflow');
 
 //routers
 app.use('/user', userRouter);
 app.use('/post', postRouter);
+app.use('/dialogflow', dialogRouter);
 app.get('*', (req, res) => {  res.status(200).json({message:"Maybe you want to check your URL!!"});  })
 
 module.exports = app;

@@ -4,11 +4,13 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const fs = require("fs");
 const Post = require("../models/Post");
-
 router.use(bodyParser.urlencoded({ extended: true }));
 const multer = require("multer");
 const generateData = require("../test/test");
 const checkAuth = require('../middleware/check-auth');
+const sharp = require('sharp');
+
+
 
 //##########################     CREATE A POST - WITH IMAGE ##################
 const upload = multer({
@@ -24,16 +26,23 @@ const upload = multer({
   },
 });
 
-//router.post('/', upload.array('images'), async (req, res) => {
-// upload images
-router.post("/", checkAuth, upload.single("image"), async (req, res) => {
-
-  // const buf = [];
-  // req.files.forEach((element) => buf.push(element.buffer));
-  // console.log(req.file)
-  var picture;
+router.post("/",  upload.single("image"), async (req, res) => {
+  //checkAuth,
+  let picture;
   if (req.file) {
     picture = req.file.buffer;
+    
+		 
+		await sharp(picture)
+			.resize({ width: 250, height: 250 })
+			.toBuffer()
+			.then((data) => {
+				picture = data;
+				//console.log(resizedPhoto);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
   }
 
   const post = new Post({
@@ -46,7 +55,7 @@ router.post("/", checkAuth, upload.single("image"), async (req, res) => {
     propType: req.body.propType,
     buyOrRent: req.body.buyOrRent,
     //images: buf
-    image: picture
+    image: picture.toString('base64')
   });
 
   try {
@@ -56,6 +65,8 @@ router.post("/", checkAuth, upload.single("image"), async (req, res) => {
     res.status(400).send(e);
   }
 });
+
+
 
 //##########################     GET All POSTS  ##################
 router.get("/", async (req, res) => {
@@ -78,7 +89,6 @@ router.get("/", async (req, res) => {
     //pagination
     //.sort({price:-1})
     let posts = Post.find(JSON.parse(queryStr)).sort(x);
-
     const page = parseInt(req.query.page) || 1;
     const pageSize = parseInt(req.query.limit) || 25;
     const skip = (page - 1) * pageSize;
@@ -100,22 +110,24 @@ router.get("/", async (req, res) => {
   }
 });
 
+
 //##########################     GET A POST  ##################
 
 router.get("/:id", async (req, res) => {
   try {
     const post = await Post.findOne({ _id: req.params.id });
-
-    //send picture
-    res.set("Content-Type", "image/jpg");
-    res.send(post.image);
+		var buf = Buffer.from(post.image, "base64")
+		//send picture
+		res.set('Content-Type', 'image/png');
+		res.send(buf);
   } catch (error) {
     res.status(500).send({ message: "User not found" });
   }
 });
 
 //##########################     DELETE A POST  ##################
-router.delete("/:id", checkAuth, async (req, res) => {
+router.delete("/:id",  async (req, res) => {
+  //checkAuth,
   try {
     const post = await Post.findOneAndDelete({ _id: req.params.id });
     if (!post) {

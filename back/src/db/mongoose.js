@@ -1,12 +1,13 @@
 const mongoose = require("mongoose");
+const config = require('../config/keys');
+
+
+const mongoURI = config.mongoURI
 
 const generateData = require("../test/test");
 
-mongoose.connect(
-  "mongodb+srv://admin:admin@chatbot-test-shared.48emm.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-  { useNewUrlParser: true, useUnifiedTopology: true },
-  () => {
+mongoose.connect(  mongoURI,  { useNewUrlParser: true, useUnifiedTopology: true },  () => {
     console.log("Connected to Database");
-    //generateData(20) //-->> to generate fake data
+   generateData(1) //-->> to generate fake data
   }
 );
