@@ -3,12 +3,12 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const fs = require("fs");
-const Home = require("../models/Home");
+const Home = require("../models/home");
 
 router.use(bodyParser.urlencoded({ extended: true }));
 const multer = require("multer");
 const generateData = require("../test/test");
-const checkAuth = require('../middleware/check-auth');
+const checkAuth = require("../middleware/check-auth");
 
 //##########################     CREATE A POST - WITH IMAGE ##################
 const upload = multer({
@@ -34,7 +34,7 @@ router.post("/", checkAuth, upload.single("image"), async (req, res) => {
   if (req.file) {
     picture = req.file.buffer;
   }
-  console.log(req.body)
+  console.log(req.body);
   const home = new Home({
     _id: new mongoose.Types.ObjectId(),
     title: req.body.title,
@@ -47,28 +47,28 @@ router.post("/", checkAuth, upload.single("image"), async (req, res) => {
     //images: buf
     image: picture,
     additional: {
-			wifi: req.body.wifi,
-			pets: req.body.pets,
-			heating: req.body.heating,
-            typeofheating:req.body.typeofheating,
-            energyefficiency: req.body.energyefficiency,
-            yearofbuilt: req.body.yearofbuilt,
-            renovationyear:req.body.renovationyear,
-            levels:req.body.levels,
-            parkingspace: req.body.parkingspace,
-            keller: req.body.keller,
-            kichen: req.body.kichen,
-            bathrooms: req.body.bathrooms,
-            livingroom: req.body.livingroom,
-            bedroom: req.body.bedroom,
-            typeofflooring:req.body.typeofflooring,
-            furniture: req.body.furniture,
-            alarmsystem: req.body.alarmsystem,
-            garden: req.body.garden,
-            typeofview: req.body.typeofview,
-            forpeoplewithmobilityproblems: req.body.forpeoplewithmobilityproblems,
-            floorlevel:req.body.floorlevel,
-		}
+      wifi: req.body.wifi,
+      pets: req.body.pets,
+      heating: req.body.heating,
+      typeofheating: req.body.typeofheating,
+      energyefficiency: req.body.energyefficiency,
+      yearofbuilt: req.body.yearofbuilt,
+      renovationyear: req.body.renovationyear,
+      levels: req.body.levels,
+      parkingspace: req.body.parkingspace,
+      keller: req.body.keller,
+      kichen: req.body.kichen,
+      bathrooms: req.body.bathrooms,
+      livingroom: req.body.livingroom,
+      bedroom: req.body.bedroom,
+      typeofflooring: req.body.typeofflooring,
+      furniture: req.body.furniture,
+      alarmsystem: req.body.alarmsystem,
+      garden: req.body.garden,
+      typeofview: req.body.typeofview,
+      forpeoplewithmobilityproblems: req.body.forpeoplewithmobilityproblems,
+      floorlevel: req.body.floorlevel,
+    },
   });
 
   try {
@@ -95,7 +95,7 @@ router.get("/", async (req, res) => {
   let queryStr = JSON.stringify(reqQuery);
   queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g, (match) => `$${match}`);
   try {
-    //find all the posts with that criteria   
+    //find all the posts with that criteria
     const test = await Home.find(JSON.parse(queryStr));
     //pagination
     //.sort({price:-1})
@@ -126,12 +126,12 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
-    const home= await Home.findOne({ _id: req.params.id });
+    const home = await Home.findOne({ _id: req.params.id });
 
-    var buf = Buffer.from(home.image, "base64")
-		//send picture
-		res.set('Content-Type', 'image/png');
-		res.send(buf);
+    var buf = Buffer.from(home.image, "base64");
+    //send picture
+    res.set("Content-Type", "image/png");
+    res.send(buf);
   } catch (error) {
     res.status(500).send({ message: "User not found" });
   }

@@ -3,12 +3,12 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const fs = require("fs");
-const Land = require("../models/Land");
+const Land = require("../models/land");
 
 router.use(bodyParser.urlencoded({ extended: true }));
 const multer = require("multer");
 const generateData = require("../test/test");
-const checkAuth = require('../middleware/check-auth');
+const checkAuth = require("../middleware/check-auth");
 
 //##########################     CREATE A POST - WITH IMAGE ##################
 const upload = multer({
@@ -34,7 +34,7 @@ router.post("/", upload.single("image"), async (req, res) => {
   if (req.file) {
     picture = req.file.buffer;
   }
-  console.log(req.body)
+  console.log(req.body);
   const land = new Land({
     _id: new mongoose.Types.ObjectId(),
     title: req.body.title,
@@ -47,17 +47,17 @@ router.post("/", upload.single("image"), async (req, res) => {
     //images: buf
     image: picture,
     additional: {
-			structurefactor: req.body.structurefactor,
-			coverageratio: req.body.coverageratio,
-			parkingspace: req.body.parkingspace,
-			slope: req.body.slope,
-			orientation: req.body.orientation,
-			typeofuse: req.body.typeofuse,
-			withincityplan: req.body.withincityplan,
-			residentialzonearea: req.body.residentialzonearea,
-			forcompensation: req.body.forcompensation,
-			accessfrom: req.body.accessfrom,
-		}
+      structurefactor: req.body.structurefactor,
+      coverageratio: req.body.coverageratio,
+      parkingspace: req.body.parkingspace,
+      slope: req.body.slope,
+      orientation: req.body.orientation,
+      typeofuse: req.body.typeofuse,
+      withincityplan: req.body.withincityplan,
+      residentialzonearea: req.body.residentialzonearea,
+      forcompensation: req.body.forcompensation,
+      accessfrom: req.body.accessfrom,
+    },
   });
 
   try {
@@ -84,7 +84,7 @@ router.get("/", async (req, res) => {
   let queryStr = JSON.stringify(reqQuery);
   queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g, (match) => `$${match}`);
   try {
-    //find all the posts with that criteria   
+    //find all the posts with that criteria
     const test = await Land.find(JSON.parse(queryStr));
     //pagination
     //.sort({price:-1})
@@ -115,12 +115,12 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
-    const land= await Land.findOne({ _id: req.params.id });
+    const land = await Land.findOne({ _id: req.params.id });
 
-    var buf = Buffer.from(land.image, "base64")
-		//send picture
-		res.set('Content-Type', 'image/png');
-		res.send(buf);
+    var buf = Buffer.from(land.image, "base64");
+    //send picture
+    res.set("Content-Type", "image/png");
+    res.send(buf);
   } catch (error) {
     res.status(500).send({ message: "User not found" });
   }
