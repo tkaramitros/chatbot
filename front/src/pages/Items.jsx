@@ -9,7 +9,7 @@ const Items = ({
   setPage,
   loading,
   ads,
-
+  setDetailedAd,
   setSorting,
 }) => {
   let loader;
@@ -74,7 +74,7 @@ const Items = ({
         <div>
           {ads.map((ad) => (
             <div key={ad._id}>
-              <Ads ad={ad} />
+              <Ads ad={ad} setDetailedAd={setDetailedAd} />
             </div>
           ))}
         </div>

@@ -1,0 +1,27 @@
+.container-card {
+  position: relative;
+  display: flex;
+  margin-top: 150px;
+}
+
+.card-title-ad {
+  text-align: start;
+}
+
+.ad-image {
+  display: grid;
+  height: 20%;
+  width: 20%;
+  margin: auto;
+  justify-items: center;
+}
+
+.features {
+  width: 20%;
+  justify-content: flex-start;
+  float: left;
+}
+
+.features-details {
+  border-left: none;
+}

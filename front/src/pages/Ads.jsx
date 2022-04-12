@@ -1,7 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./Ads.css";
 
-const Ads = ({ ad }) => {
+const Ads = ({ ad, setDetailedAd }) => {
+  const navigate = useNavigate();
+
   return (
     <>
       <div className="search-bar2">
@@ -26,6 +29,10 @@ const Ads = ({ ad }) => {
               type="button"
               className="btn btn-dark"
               style={{ marginLeft: "20px" }}
+              onClick={() => {
+                setDetailedAd(ad);
+                navigate("/details");
+              }}
             >
               View
             </button>

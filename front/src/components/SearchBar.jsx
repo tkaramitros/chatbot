@@ -5,7 +5,7 @@ import { useNavigate, useLocation, useParams } from "react-router-dom";
 import Items from "../pages/Items";
 import Chatbot from "../Chatbot/Chatbot";
 
-const SearchBar = () => {
+const SearchBar = ({ setDetailedAd }) => {
   const navigate = useNavigate();
   const { urlFilter } = useParams();
   const location = useLocation();
@@ -40,7 +40,7 @@ const SearchBar = () => {
       route = "office";
     } else if (propType == "Land") {
       route = "land";
-    } else route = "post";
+    } else route = "home";
     const fetchData = async () => {
       setLoading(true);
       let query;
@@ -116,6 +116,7 @@ const SearchBar = () => {
           setSorting={setSorting}
           ads={ads}
           loading={loading}
+          setDetailedAd={setDetailedAd}
         />
       </div>
     ) : (

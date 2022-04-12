@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { Route } from "react-router";
 import { Routes } from "react-router";
 import "./App.css";
@@ -11,8 +12,11 @@ import Login from "./components/navpages/Login";
 import SignUp from "./components/navpages/SignUp";
 import Dashboard from "./components/Dashboard";
 import { SliderData } from "./SliderData";
+import AdDetails from "./pages/AdDetails";
 
 function App() {
+  const [detailedAd, setDetailedAd] = useState({});
+
   return (
     <>
       <Navbar />
@@ -26,12 +30,16 @@ function App() {
             </>
           }
         />
-        <Route path="/items/:urlFilter" element={<SearchBar />} />
+        <Route
+          path="/items/:urlFilter"
+          element={<SearchBar setDetailedAd={setDetailedAd} />}
+        />
         <Route path="/sell" element={<Sell />} />
         <Route path="/rent" element={<Rent />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/Dashboard" element={<Dashboard />} />
+        <Route path="/details" element={<AdDetails ad={detailedAd} />} />
       </Routes>
       <Footer />
     </>
