@@ -14,3 +14,7 @@
   padding-top: 10%;
   display: block;
 }
+
+.btn-group {
+  display: inline-flex;
+}

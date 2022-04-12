@@ -14,3 +14,20 @@
   padding-top: 10%;
   display: block;
 }
+
+.radiocheck {
+  display: inline-flex;
+  margin-top: 100px;
+  margin-left: 40%;
+}
+
+.property-message {
+  width: 25%;
+  text-align: center;
+  font-size: large;
+  font-weight: bolder;
+  background-color: rgb(167, 172, 172);
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
