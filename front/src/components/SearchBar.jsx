@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "./Searchbar.css";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
-
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import Items from "../pages/Items";
+import Chatbot from "../Chatbot/Chatbot";
 
-const SearchBar = () => {
+const SearchBar = ({ setDetailedAd }) => {
   const navigate = useNavigate();
+  const { urlFilter } = useParams();
+  const location = useLocation();
+  const params = location.search ? location.search : null;
 
   const [filter, setFilter] = useState("");
   const [sorting, setSorting] = useState("createdAt");
@@ -25,21 +27,39 @@ const SearchBar = () => {
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(1);
 
-  const [priceOrder, setPriceOrder] = useState("descending");
+  const [userQuery, setUserQuery] = useState(false);
+  const [checkHelper, setCheckHelper] = useState(false);
 
+  const [open, setOpen] = useState(true);
+  let route;
   useEffect(() => {
     let cancel;
-
+    if (propType == "Home") {
+      route = "home";
+    } else if (propType == "Office") {
+      route = "office";
+    } else if (propType == "Land") {
+      route = "land";
+    } else route = "home";
     const fetchData = async () => {
       setLoading(true);
+      let query;
+
       try {
+        if (params && !filter) {
+          query = params;
+        } else {
+          query = filter;
+        }
+
         const { data, pages: totalPages } = await axios({
           method: "GET",
-          url: `/post?page=${page}&sort=${sorting}${filter}`,
+          url: `/${route}?page=${page}&sort=${sorting}${query}`,
           cancelToken: new axios.CancelToken((c) => (cancel = c)),
         });
 
         setAds(data.aggelies);
+
         setPages(data.pages);
         setLoading(false);
       } catch (error) {
@@ -51,7 +71,7 @@ const SearchBar = () => {
     fetchData();
 
     return () => cancel();
-  }, [filter, page, sorting]);
+  }, [params, filter, page, sorting]);
 
   const handleSubmit = () => {
     const buyLowPrice = price - 10000;
@@ -79,7 +99,7 @@ const SearchBar = () => {
     const urlFilter = `&${priceValue}&${sizeValue}&${cityValue}&${buyOrRentValue}&${propTypeValue}`;
 
     setFilter(urlFilter);
-    navigate(urlFilter);
+    navigate("/items/" + urlFilter);
   };
 
   let filtering;
@@ -87,7 +107,7 @@ const SearchBar = () => {
   if (filter === "") {
     filtering = "";
   } else {
-    filtering = (
+    filtering = ads[0] ? (
       <div>
         <Items
           page={page}
@@ -96,14 +116,63 @@ const SearchBar = () => {
           setSorting={setSorting}
           ads={ads}
           loading={loading}
+          setDetailedAd={setDetailedAd}
         />
+      </div>
+    ) : (
+      <div className="ad-results">
+        Unfortunately no results match your criteria.
       </div>
     );
   }
 
+  const getResults = async () => {
+    const results = await axios.get("/dialogflow/getURL");
+    const chatQuery = results.data.URL[0];
+    setBuyOrRent(chatQuery.buyOrRent);
+    setCity(chatQuery.city);
+    setPrice(chatQuery.price);
+    setSize(chatQuery.size);
+    setPropType(chatQuery.propType);
+    setCheckHelper(true);
+  };
+
+  useEffect(() => {
+    if (userQuery === true) {
+      console.log(price, city);
+      handleSubmit();
+    }
+    setUserQuery(false);
+    setCheckHelper(false);
+  }, [checkHelper]);
+
+  const toggleChat = open ? (
+    <div>
+      <Chatbot setUserQuery={setUserQuery} getResults={getResults} />
+    </div>
+  ) : (
+    <div></div>
+  );
+
+  const buttonIcon = open ? (
+    <i class="bi bi-x-lg" style={{ color: "white" }}></i>
+  ) : (
+    <i class="bi bi-messenger" style={{ color: "white" }}></i>
+  );
+
   return (
     <>
-      <div className="fadeTop" />
+      <div className="app-bg" style={{ position: "absolute" }}>
+        {toggleChat}
+        <button
+          type="button"
+          class="close-chatbot"
+          onClick={() => setOpen(!open)}
+        >
+          {buttonIcon}
+        </button>
+      </div>
+
       <div className="search-bar">
         <div className="container">
           <div className="selection row">
@@ -247,7 +316,6 @@ const SearchBar = () => {
                 </div>
               </form>
             </nav>
-
             <button
               className="btn search-btn btn-outline-warning "
               type="submit"
@@ -258,7 +326,7 @@ const SearchBar = () => {
           </div>
         </div>
       </div>
-      <div className="fadeBottom" />
+
       <div>{filtering}</div>
     </>
   );

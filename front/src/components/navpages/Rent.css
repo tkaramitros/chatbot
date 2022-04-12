@@ -1,0 +1,62 @@
+.navbar2 {
+  position: fixed;
+  display: flex;
+  z-index: 100;
+  justify-content: space-between;
+  backdrop-filter: blur(10px);
+}
+
+.app-bg {
+  background: url("../images/view.jpeg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: repeat;
+  background-attachment: fixed;
+}
+
+/* .containerfluid {
+  background-image: url("../images/Back2.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+} */
+.container__card {
+  padding-top: 10%;
+  display: block;
+}
+
+.radiocheck {
+  position: absolute;
+  display: inline-flex;
+  margin-top: 0;
+  margin-left: 28.5%;
+}
+
+.property-message {
+  width: 25%;
+  text-align: center;
+  font-size: large;
+  font-weight: bolder;
+
+  margin: auto;
+  margin-top: 200px;
+  padding-bottom: 400px;
+}
+
+.btn-group {
+  border: none;
+}
+
+.btn-group:hover {
+  color: aliceblue;
+}
+
+.btn-secondary {
+  color: black;
+  background-color: rgb(252, 252, 252);
+  border-color: black;
+}
+
+.btn-secondary:hover {
+  background-color: black;
+  color: white;
+}

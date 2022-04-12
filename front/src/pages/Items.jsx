@@ -9,7 +9,7 @@ const Items = ({
   setPage,
   loading,
   ads,
-
+  setDetailedAd,
   setSorting,
 }) => {
   let loader;
@@ -30,7 +30,7 @@ const Items = ({
   };
 
   return (
-    <div>
+    <div className="item__card app-bg">
       {loader}
       <br />
       <Pagination page={page} pages={pages} changePage={setPage} />
@@ -74,7 +74,7 @@ const Items = ({
         <div>
           {ads.map((ad) => (
             <div key={ad._id}>
-              <Ads ad={ad} />
+              <Ads ad={ad} setDetailedAd={setDetailedAd} />
             </div>
           ))}
         </div>

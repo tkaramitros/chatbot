@@ -1,3 +1,7 @@
+.item__card {
+  margin-top: 10px;
+}
+
 .form-select {
   width: 25%;
   margin: auto;

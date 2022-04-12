@@ -1,0 +1,20 @@
+.main-container {
+  background-image: url("../images/Back2.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.navbar2 {
+  position: fixed;
+  display: flex;
+  z-index: 100;
+  justify-content: space-between;
+  backdrop-filter: blur(10px);
+}
+.container__card {
+  padding-top: 10%;
+  display: block;
+}
+
+.btn-group {
+  display: inline-flex;
+}

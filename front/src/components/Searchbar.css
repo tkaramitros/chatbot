@@ -1,12 +1,13 @@
 .search-bar {
-  background-image: linear-gradient(
-    to bottom,
-    rgb(172, 220, 252),
-    rgb(146, 209, 250),
-    rgb(172, 220, 252)
-  );
+  background: transparent;
   padding-bottom: 15px;
   padding-top: 15px;
+  position: absolute;
+  z-index: 1000;
+  top: 59px;
+
+  left: 23%;
+  backdrop-filter: blur(10px);
 }
 
 .fadeTop {
@@ -93,6 +94,18 @@
   margin: auto;
 }
 
+.close-chatbot {
+  height: 50px;
+  width: 50px;
+  position: fixed;
+  z-index: 2000;
+  top: 820px;
+  right: 30px;
+  background-color: #8b95a5;
+  border-radius: 50px;
+  border: none;
+}
+
 .btn-group {
   border: 1px solid black;
   width: 150px;
@@ -157,6 +170,14 @@
   position: absolute;
 }
 
+.ad-results {
+  width: 100%;
+  text-align: center;
+  font-size: large;
+  font-weight: bold;
+  margin-top: 300px;
+}
+
 @media screen and (min-width: 768px) and (max-width: 1024px) {
   .d-flex {
     width: 730px;
@@ -169,6 +190,14 @@
   .btn-group {
     margin-left: 0;
   }
+}
+
+.app-bg {
+  background: url("./images/view.jpeg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: repeat;
+  background-attachment: fixed;
 }
 
 @media screen and (min-width: 481px) and (max-width: 767px) {
