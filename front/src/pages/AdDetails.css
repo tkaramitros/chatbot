@@ -25,3 +25,17 @@
 .features-details {
   border-left: none;
 }
+
+.back-to-home {
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  cursor: pointer;
+  color: black;
+  font-style: italic;
+  transition: 0.4s ease-in;
+}
+
+.back-to-home:hover {
+  transform: scale(1.2);
+}

@@ -3,9 +3,11 @@ import "./AdDetails.css";
 import HomeDetails from "./HomeDetails";
 import LandDetails from "./LandDetails";
 import OfficeDetails from "./OfficeDetails";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const AdDetails = ({ ad }) => {
-  console.log(ad);
+  const navigate = useNavigate;
 
   let floor;
   if (ad.additional.levels == 1) {
@@ -86,7 +88,21 @@ const AdDetails = ({ ad }) => {
       />
     );
 
-  return <div className="container container-card">{property}</div>;
+  return (
+    <>
+      <Link to="/">
+        <div
+          className="back-to-home"
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          Back to home
+        </div>
+      </Link>
+      <div className="container container-card">{property}</div>
+    </>
+  );
 };
 
 export default AdDetails;

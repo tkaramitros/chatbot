@@ -6,8 +6,8 @@ const Navbar = () => {
   return (
     <nav className="navbar2 navbar navbar-expand-lg  ">
       <div className="container-fluid">
-        <a class="navbar-brand ">
-          <img src={logo} alt="Real Estate" />
+        <a class="navbar-brand " href="/">
+          <img src={logo} alt="Real Estate" className="img-logo" />
         </a>
         <button
           className="navbar-toggler "

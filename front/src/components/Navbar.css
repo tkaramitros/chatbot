@@ -36,3 +36,6 @@
 .bi {
   font-size: 15%;
 }
+.img-logo {
+  cursor: pointer;
+}
