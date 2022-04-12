@@ -36,7 +36,7 @@ const SignUp = () => {
   }
 
   return (
-    <div className="container-sup">
+    <div className="container-sup" style={{ paddingTop: "70px" }}>
       <h1>Register</h1>
       <form onSubmit={registerUser}>
         <input
@@ -60,7 +60,7 @@ const SignUp = () => {
           placeholder="Password"
         />
         <br />
-        <input type="submit" value="Register" />
+        <input type="submit" value="Register" style={{ marginTop: "20px" }} />
       </form>
     </div>
   );

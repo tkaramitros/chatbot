@@ -7,35 +7,35 @@ const Ads = ({ ad, setDetailedAd }) => {
 
   return (
     <>
-      <div className="search-bar2">
-        <div className="card" style={{ width: "35rem", marginBottom: "20px" }}>
-          <img
-            src={`data:image/png;base64,${ad.image}`}
-            className="card-img-top"
-            alt="..."
-          />
-          <div className="card-body">
-            <h5 className="card-title">{ad.title}</h5>
-            <p className="card-text">{ad.description}</p>
+      <div className="container container-ad">
+        <img
+          src={`data:image/png;base64,${ad.image}`}
+          className="card-img-top"
+          alt="..."
+        />
+        <div class="card2" style={{ width: "60%", marginBottom: "20px" }}>
+          <div class="card-header">
+            {ad.buyOrRent} {ad.propType} at {ad.city}
           </div>
-          <ul className="list-group list-group-flush">
-            <li className="list-group-item">Location: {ad.city}</li>
-            <li className="list-group-item">Price: {ad.price} €</li>
-            <li className="list-group-item">Size: {ad.size} m²</li>
-          </ul>
-          <div className="card-body">
-            {ad.buyOrRent} {ad.propType}
-            <button
-              type="button"
-              className="btn btn-dark"
-              style={{ marginLeft: "20px" }}
-              onClick={() => {
-                setDetailedAd(ad);
-                navigate("/details");
-              }}
-            >
-              View
-            </button>
+          <div class="card-body">
+            <h3 class="card-text">
+              {ad.title}, {ad.size} m²
+            </h3>
+            <p class="card-text">{ad.description}</p>
+            <div className="card-body" style={{ display: "flex" }}>
+              <h3>€ {ad.price.toLocaleString()}</h3>
+              <button
+                type="button"
+                className="btn btn-dark"
+                style={{ marginLeft: "20px" }}
+                onClick={() => {
+                  setDetailedAd(ad);
+                  navigate("/details");
+                }}
+              >
+                View
+              </button>
+            </div>
           </div>
         </div>
       </div>

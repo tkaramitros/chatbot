@@ -162,7 +162,7 @@ const SearchBar = ({ setDetailedAd }) => {
 
   return (
     <>
-      <div style={{ position: "absolute" }}>
+      <div className="app-bg" style={{ position: "absolute" }}>
         {toggleChat}
         <button
           type="button"

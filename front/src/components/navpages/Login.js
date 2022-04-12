@@ -34,7 +34,10 @@ const Login = () => {
   }
 
   return (
-    <div className="container-lg">
+    <div
+      className="container-lg"
+      style={{ paddingTop: "70px", paddingBottom: " 70px" }}
+    >
       <h1>Login</h1>
       <form onSubmit={loginUser}>
         <input

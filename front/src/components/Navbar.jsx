@@ -34,7 +34,7 @@ const Navbar = () => {
             </li>
             <li className="nav-item ">
               <a className="nav-link" href="sell">
-                Sell
+                Buy
               </a>
             </li>
           </ul>

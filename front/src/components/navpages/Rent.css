@@ -5,20 +5,30 @@
   justify-content: space-between;
   backdrop-filter: blur(10px);
 }
-.main-container {
+
+.app-bg {
+  background: url("../images/view.jpeg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: repeat;
+  background-attachment: fixed;
+}
+
+/* .containerfluid {
   background-image: url("../images/Back2.jpg");
   background-size: cover;
   background-repeat: no-repeat;
-}
+} */
 .container__card {
   padding-top: 10%;
   display: block;
 }
 
 .radiocheck {
+  position: absolute;
   display: inline-flex;
-  margin-top: 100px;
-  margin-left: 40%;
+  margin-top: 0;
+  margin-left: 28.5%;
 }
 
 .property-message {
@@ -26,8 +36,27 @@
   text-align: center;
   font-size: large;
   font-weight: bolder;
-  background-color: rgb(167, 172, 172);
+
   margin: auto;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 200px;
+  padding-bottom: 400px;
+}
+
+.btn-group {
+  border: none;
+}
+
+.btn-group:hover {
+  color: aliceblue;
+}
+
+.btn-secondary {
+  color: black;
+  background-color: rgb(252, 252, 252);
+  border-color: black;
+}
+
+.btn-secondary:hover {
+  background-color: black;
+  color: white;
 }

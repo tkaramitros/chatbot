@@ -70,7 +70,7 @@ const Rent = () => {
 
   return (
     <>
-      <div className="containerfluid">
+      <div className="containerfluid app-bg">
         <div className="main-container">
           <div className="container container__card">
             <div class="radiocheck btn-group">

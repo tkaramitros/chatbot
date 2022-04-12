@@ -30,7 +30,7 @@ const Items = ({
   };
 
   return (
-    <div className="item__card">
+    <div className="item__card app-bg">
       {loader}
       <br />
       <Pagination page={page} pages={pages} changePage={setPage} />

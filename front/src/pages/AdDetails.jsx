@@ -90,17 +90,19 @@ const AdDetails = ({ ad }) => {
 
   return (
     <>
-      <Link to="/">
-        <div
-          className="back-to-home"
-          onClick={() => {
-            navigate("/");
-          }}
-        >
-          Back to home
-        </div>
-      </Link>
-      <div className="container container-card">{property}</div>
+      <div className="app-bg">
+        <Link to="/">
+          <div
+            className="back-to-home"
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            Back to home
+          </div>
+        </Link>
+        <div className="container container-card">{property}</div>
+      </div>
     </>
   );
 };

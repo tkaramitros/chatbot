@@ -192,6 +192,14 @@
   }
 }
 
+.app-bg {
+  background: url("./images/view.jpeg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: repeat;
+  background-attachment: fixed;
+}
+
 @media screen and (min-width: 481px) and (max-width: 767px) {
   .d-flex {
     width: 600px;
